@@ -10,6 +10,8 @@
 
 #include <iostream>
 
+#include "particle.h"
+
 std::string display_text = "This is a test";
 
 
@@ -29,6 +31,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+
+Particle*				part		= NULL;
 
 
 // Initialize physics engine
@@ -56,9 +60,11 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
-	RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
+	part = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 15.0, 0.0), Vector3(0.0, -9.8, 0.0), 0.9, sphereShape, Vector4(1.0, 0.0, 0.0, 1.0));
+	
+	/*RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
 	RenderItem* spherey = new RenderItem(sphereShape, new PxTransform(0, 5, 0), Vector4(0, 1, 0, 1));
-	RenderItem* spherez = new RenderItem(sphereShape, new PxTransform(0, 0, 5), Vector4(0, 0, 1, 1));
+	RenderItem* spherez = new RenderItem(sphereShape, new PxTransform(0, 0, 5), Vector4(0, 0, 1, 1));*/
 	}
 
 
@@ -71,6 +77,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	part->integrate(t);
 }
 
 // Function to clean data
