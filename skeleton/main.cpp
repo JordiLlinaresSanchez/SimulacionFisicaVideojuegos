@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "particle.h"
+#include "projectile.h"
 
 std::string display_text = "This is a test";
 
@@ -32,10 +33,12 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Particle*				part		= NULL;
+Projectile*				projectil   = NULL;
+
+std::vector<RenderItem*> RI (0);
 
 
-// Initialize physics engine
+// Initialize physics engine 
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -60,7 +63,13 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
-	part = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 15.0, 0.0), Vector3(0.0, -9.8, 0.0), 0.9, sphereShape, Vector4(1.0, 0.0, 0.0, 1.0));
+	
+	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0)), Vector4(1.0, 0.1, 0.1, 1.0)));
+	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0)), Vector4(0.1, 1.0, 0.1, 1.0)));
+	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0)), Vector4(0.1, 0.1, 1.0, 1.0)));
+	
+	projectil = new Projectile(Vector3(-15.0, 20.0, 0.0), Vector3(20.0, 0.0, 0.0), Vector3(0.0, -9.8/5, 0.0), 1.0, 0.9, sphereShape, Vector4(1.0, 0.0, 0.0, 1.0));
+
 	
 	/*RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
 	RenderItem* spherey = new RenderItem(sphereShape, new PxTransform(0, 5, 0), Vector4(0, 1, 0, 1));
@@ -77,7 +86,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	part->integrate(t);
+	projectil->integrate(t);
 }
 
 // Function to clean data

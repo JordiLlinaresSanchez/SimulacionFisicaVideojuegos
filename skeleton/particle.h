@@ -5,7 +5,7 @@
 class RenderItem;
 class Particle
 {
-private:
+protected:
 	RenderItem* _renderItem;
 	physx::PxTransform _pose;
 	Vector3 _vel;
@@ -15,6 +15,6 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 accel, double dumping, physx::PxShape* shape, Vector4 color);
 	~Particle();
 
-	void integrate(double t);
+	virtual void integrate(double t);
 };
 
