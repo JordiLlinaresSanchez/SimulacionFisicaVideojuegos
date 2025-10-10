@@ -68,7 +68,7 @@ void initPhysics(bool interactive)
 	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0)), Vector4(0.1, 1.0, 0.1, 1.0)));
 	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0)), Vector4(0.1, 0.1, 1.0, 1.0)));
 	
-	projectil = new Projectile(Vector3(-15.0, 20.0, 0.0), Vector3(20.0, 0.0, 0.0), Vector3(0.0, -9.8/5, 0.0), 1.0, 0.9, sphereShape, Vector4(1.0, 0.0, 0.0, 1.0));
+	projectil = new Projectile(Vector3(-15.0, 20.0, 0.0), Vector3(250.0, 0.0, 0.0), Vector3(0.0, -9.8, 0.0), 40.0, 0.9, sphereShape, CanonBall, Vector4(1.0, 0.0, 0.0, 1.0));
 
 	
 	/*RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
