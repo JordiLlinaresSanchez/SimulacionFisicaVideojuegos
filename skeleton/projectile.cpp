@@ -33,7 +33,7 @@ Projectile::Projectile(Vector3 pos, Vector3 vel, Vector3 accel, double mass, dou
 }
 
 Projectile::Projectile(Vector3 pos, Vector3 dir, Vector3 accel, double mass, double dumping, ProjType proj)
-	:_mass (mass), _simMass(0), Particle(pos, dir, accel, dumping, CreateShape(PxSphereGeometry(8.0f)), Vector4()) {
+	:_mass (mass), _simMass(0), Particle(pos, dir, accel, dumping, CreateShape(PxSphereGeometry(1.0f)), Vector4()) {
 	Vector3 vel = Vector3();
 	switch (proj)
 	{
@@ -46,7 +46,7 @@ Projectile::Projectile(Vector3 pos, Vector3 dir, Vector3 accel, double mass, dou
 		_renderItem->shape->setGeometry(PxSphereGeometry(3.0f));
 		break;
 	case CanonBall:
-		vel = dir.getNormalized() * 30;
+		vel = dir.getNormalized() * 250;
 		Particle::_accel /= 2;
 		Particle::_vel = vel / 2;
 		_mass *= pow(vel.magnitude() / _vel.magnitude(), 2);

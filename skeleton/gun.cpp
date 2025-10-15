@@ -15,7 +15,7 @@ Gun::shoot(){
 
 void
 Gun::clean(double t) {
-	int toDelete = 0;
+	/*int toDelete = 0;
 	for (int i = 0; i < _projectiles.size(); i++) {
 		_projectiles[i].lifeTime += t;
 		if (_projectiles[i].lifeTime > _lifeTime) {
@@ -24,7 +24,7 @@ Gun::clean(double t) {
 		}
 	}
 	for (int i = 0; i < toDelete; i++) _projectiles[_projectiles.size() - 1 - toDelete].proj;
-	_projectiles.resize(_projectiles.size() - toDelete);
+	_projectiles.resize(_projectiles.size() - toDelete);*/
 }
 
 void
@@ -37,6 +37,9 @@ Gun::setDir(Vector3 dir) { _dir = dir; }
 
 void 
 Gun::setPos(Vector3 pos) { _pos = pos; }
+
+void
+Gun::setType(ProjType type) { _type = type; }
 
 Vector3
 Gun::getPos()const { return _pos; }

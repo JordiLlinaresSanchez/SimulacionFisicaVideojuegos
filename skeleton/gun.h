@@ -26,6 +26,7 @@ public:
 
 	void setDir(Vector3 dir);
 	void setPos(Vector3 pos);
+	void setType(ProjType);
 
 	Vector3 getPos() const;
 	Vector3 getDir() const;

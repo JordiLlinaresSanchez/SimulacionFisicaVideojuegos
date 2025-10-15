@@ -90,7 +90,6 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	gun->clean(t);
 	gun->integrate(t);
 }
 
@@ -122,6 +121,25 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'B':
 	{
+		gun->setDir(-camera.q.getBasisVector2());
+		gun->setPos(camera.p );
+		gun->setType(GunBullet);
+		gun->shoot();
+		break;
+	}
+	case 'N': 
+	{
+		gun->setDir(-camera.q.getBasisVector2());
+		gun->setPos(camera.p);
+		gun->setType(CanonBall);
+		gun->shoot();
+		break;
+	}
+	case 'M':
+	{
+		gun->setDir(-camera.q.getBasisVector2());
+		gun->setPos(camera.p);
+		gun->setType(TankBullet);
 		gun->shoot();
 		break;
 	}
