@@ -12,6 +12,9 @@
 
 #include "particle.h"
 #include "projectile.h"
+#include "gun.h"
+
+#define _USE_MATH_DEFINES
 
 std::string display_text = "This is a test";
 
@@ -33,7 +36,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Projectile*				projectil   = NULL;
+Gun*					gun			= NULL;
 
 std::vector<RenderItem*> RI (0);
 
@@ -62,13 +65,14 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
+	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
 	
-	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0)), Vector4(1.0, 0.1, 0.1, 1.0)));
-	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0)), Vector4(0.1, 1.0, 0.1, 1.0)));
-	RI.push_back(new RenderItem(sphereShape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0)), Vector4(0.1, 0.1, 1.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
+
 	
-	projectil = new Projectile(Vector3(-15.0, 20.0, 0.0), Vector3(250.0, 0.0, 0.0), Vector3(0.0, -9.8, 0.0), 40.0, 0.9, sphereShape, CanonBall, Vector4(1.0, 0.0, 0.0, 1.0));
+	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
 
 	
 	/*RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
@@ -86,7 +90,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	projectil->integrate(t);
+	gun->clean(t);
+	gun->integrate(t);
 }
 
 // Function to clean data
@@ -111,13 +116,13 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-
 	switch(toupper(key))
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case 'B':
 	{
+		gun->shoot();
 		break;
 	}
 	default:

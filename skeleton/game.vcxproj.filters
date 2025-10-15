@@ -12,6 +12,7 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="projectile.cpp" />
+    <ClCompile Include="gun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -25,6 +26,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="projectile.h" />
+    <ClInclude Include="gun.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

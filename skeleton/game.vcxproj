@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="projectile.cpp" />
@@ -264,6 +265,7 @@
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="RenderUtils.hpp" />
