@@ -254,9 +254,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="gaussianParticleGenerator.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="particleGenerator.cpp" />
     <ClCompile Include="particleSystem.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
@@ -266,8 +268,10 @@
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="gaussianParticleGenerator.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="particleGenerator.h" />
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="RenderUtils.hpp" />

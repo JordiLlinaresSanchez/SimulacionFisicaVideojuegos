@@ -1,22 +1,27 @@
 #pragma once
 
-#include "PxPhysicsAPI.h"
-#include "core.hpp"
+#include "particleGenerator.h"
 
-class Particle;
+
 class ParticleSystem
 {
+	
 private:
+	int _partsPerFrame;
+
 	Vector3 _particleSource;
-	Vector3 _direction;
-	std::vector<Particle*> _particles;
-	double _lifeTime;
-	double _lifeDistance;
-	double _speed;
+	std::vector<ParticleDT> _particles;
+	std::vector<ParticleGenerator*> _particleGenerators;
+
+	void integrateParticles(double t);
+	void generateParticle();
+	void deleteParticles();
 
 public:
-	ParticleSystem(Vector3 particleSource, Vector3 dir, double lifeTime, double lifeDistance, double speed);
-
-
+	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, int partsPerFrame, std::vector<ParticleDT> particles);
+	~ParticleSystem();
+	void generateParticles();
+	void addParticleGenerator(ParticleGenerator* particleGenerator);
+	void update(double t);
 };
 

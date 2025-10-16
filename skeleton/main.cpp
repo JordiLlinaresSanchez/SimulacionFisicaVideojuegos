@@ -13,6 +13,8 @@
 #include "particle.h"
 #include "projectile.h"
 #include "gun.h"
+#include "gaussianParticleGenerator.h"
+#include "particleSystem.h"
 
 #define _USE_MATH_DEFINES
 
@@ -37,6 +39,8 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 Gun*					gun			= NULL;
+ParticleSystem*			pS			= NULL;
+
 
 std::vector<RenderItem*> RI (0);
 
@@ -66,18 +70,21 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
+	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
 	
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
 
-	
 	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
 
-	
-	/*RenderItem* spherex = new RenderItem(sphereShape, new PxTransform(5, 0, 0), Vector4(1, 0, 0, 1));
-	RenderItem* spherey = new RenderItem(sphereShape, new PxTransform(0, 5, 0), Vector4(0, 1, 0, 1));
-	RenderItem* spherez = new RenderItem(sphereShape, new PxTransform(0, 0, 5), Vector4(0, 0, 1, 1));*/
+	ParticleGenerator* pg = new GaussianParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 10.0, 0.0), Vector3(0.0, -9.4, 0.0),
+														 sphere, 7.0, 10.0, 10.0, 0.9, Vector4(0.5, 0.5, 1.0, 1.0), 0.6, Vector3(1.0, 0.0, 1.0),
+														 Vector3(0.5, 5.0, 0.5), 1.5, 3.0, Vector4(0.0, 0.0, 0.0, 0.0));
+	std::vector<ParticleGenerator*> vpg(0);
+	vpg.push_back(pg);
+	pS = new ParticleSystem(vpg, 1, std::vector<ParticleDT>());
+
 	}
 
 
@@ -91,6 +98,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	gun->integrate(t);
+	pS->update(t);
 }
 
 // Function to clean data

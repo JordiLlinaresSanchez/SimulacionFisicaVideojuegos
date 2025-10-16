@@ -14,6 +14,8 @@
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="particleSystem.cpp" />
+    <ClCompile Include="particleGenerator.cpp" />
+    <ClCompile Include="gaussianParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -29,6 +31,8 @@
     <ClInclude Include="projectile.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="particleSystem.h" />
+    <ClInclude Include="particleGenerator.h" />
+    <ClInclude Include="gaussianParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
