@@ -13,6 +13,7 @@
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="gun.cpp" />
+    <ClCompile Include="particleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -27,6 +28,7 @@
     <ClInclude Include="particle.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="gun.h" />
+    <ClInclude Include="particleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
