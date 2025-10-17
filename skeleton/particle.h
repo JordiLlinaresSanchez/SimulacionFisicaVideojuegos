@@ -14,6 +14,8 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 accel, double dumping, physx::PxShape* shape, Vector4 color);
 	~Particle();
 
+	Vector3 getPos()const;
+
 	virtual void integrate(double t);
 };
 

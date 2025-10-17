@@ -79,11 +79,11 @@ void initPhysics(bool interactive)
 	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
 
 	ParticleGenerator* pg = new GaussianParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 10.0, 0.0), Vector3(0.0, -9.4, 0.0),
-														 sphere, 7.0, 10.0, 10.0, 0.9, Vector4(0.5, 0.5, 1.0, 1.0), 0.6, Vector3(1.0, 0.0, 1.0),
-														 Vector3(0.5, 5.0, 0.5), 1.5, 3.0, Vector4(0.0, 0.0, 0.0, 0.0));
+														 sphere, 7.0, 10.0, 10.0, 0.9, Vector4(0.5, 0.5, 1.0, 1.0), 0.6, Vector3(5.0, 0.0, 5.0),
+														 Vector3(0.5, 5.0, 0.5), 1.5, 3.0, Vector4(0.2, 0.2, 0.2, 0.0));
 	std::vector<ParticleGenerator*> vpg(0);
 	vpg.push_back(pg);
-	pS = new ParticleSystem(vpg, 1, std::vector<ParticleDT>());
+	pS = new ParticleSystem(vpg, 3, std::vector<ParticleDT>());
 
 	}
 

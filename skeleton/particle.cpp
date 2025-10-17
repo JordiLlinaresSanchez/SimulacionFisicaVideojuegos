@@ -13,9 +13,13 @@ Particle::~Particle(){
 	delete _renderItem;
 }
 
-void Particle::integrate(double t){
+void 
+Particle::integrate(double t){
 	_vel += _accel * t;
 	_pose.p += t * _vel;
 
 	_vel *= pow(_dumping, t);
 }
+
+Vector3
+Particle::getPos()const { return _pose.p; }

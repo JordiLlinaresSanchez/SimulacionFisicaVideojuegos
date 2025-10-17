@@ -36,5 +36,12 @@ ParticleSystem::generateParticle() {
 
 void 
 ParticleSystem::deleteParticles() {
-
+	for (int i = _particles.size() - 1; i > 0; --i) {
+		if (_particles[i].lifeDistance > (_particles[i].particle->getPos() - _particles[i].origin).magnitude()) {
+			(_particles[i], _particles[_particles.size() - 1]) = (_particles[_particles.size() - 1], _particles[i]);
+			auto p = --_particles.end();
+			_particles.pop_back();
+			delete p._Ptr->particle;
+		}
+	}
 }

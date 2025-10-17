@@ -6,6 +6,7 @@ class Particle;
 
 struct ParticleDT {
 	Particle* particle;
+	Vector3 origin;
 	double lifeDistance;
 	double lifeTime;
 };
