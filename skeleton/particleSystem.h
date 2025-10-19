@@ -7,7 +7,6 @@ class ParticleSystem
 {
 	
 private:
-	int _partsPerFrame;
 
 	Vector3 _particleSource;
 	std::vector<ParticleDT> _particles;
@@ -15,10 +14,10 @@ private:
 
 	void integrateParticles(double t);
 	void generateParticle();
-	void deleteParticles();
+	void deleteParticles(double t);
 
 public:
-	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, int partsPerFrame, std::vector<ParticleDT> particles);
+	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, std::vector<ParticleDT> particles);
 	~ParticleSystem();
 	void generateParticles();
 	void addParticleGenerator(ParticleGenerator* particleGenerator);

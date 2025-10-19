@@ -1,14 +1,14 @@
-#include "gaussianParticleGenerator.h"
+#include "uniformParticleGenerator.h"
 #include "particle.h"
 
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, 
+UniformParticleGenerator::UniformParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape,
 	double lifeTime, double lifeDistance, double dumping, Vector4 color, int partsPerFrame, double genProb, Vector3 sourceVar,
-	Vector3 velVar, double lifeVar, double distanceVar, Vector4 colorVar) : _velocityVar(sourceVar), _particleSourceVar(velVar), 
+	Vector3 velVar, double lifeVar, double distanceVar, Vector4 colorVar) : _velocityVar(sourceVar), _particleSourceVar(velVar),
 	_lifeTimeVar(lifeVar), _lifeDistanceVar(distanceVar), _colorVar(colorVar),
 	ParticleGenerator(particleSource, vel, accel, shape, lifeTime, lifeDistance, dumping, color, partsPerFrame, genProb) {}
 
 std::vector<ParticleDT>
-GaussianParticleGenerator::generateParticle() {
+UniformParticleGenerator::generateParticle() {
 	std::vector<ParticleDT> particles(0);
 	for (int i = 0; i < _partsPerFrame; i++) {
 		if (abs(_u(_mt)) > _genProb) continue;

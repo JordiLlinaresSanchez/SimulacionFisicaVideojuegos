@@ -18,10 +18,11 @@ protected:
 	Vector3 _particleSource, _velocity, _acceleration;
 	Vector4 _color;
 	double _lifeTime, _lifeDistance, _mass, _dumping, _genProb;
+	int _partsPerFrame;
 
 public:
-	ParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, double genProb);
-	virtual std::vector<ParticleDT> generateParticle(int particlesNumber)=0;
+	ParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double dumping, Vector4 color, int partsPerFrame, double genProb);
+	virtual std::vector<ParticleDT> generateParticle()=0;
 
 	inline void setParticleSource(Vector3 pSource) { _particleSource = pSource; }
 	inline void setVelocity(Vector3 vel) { _velocity = vel; }
