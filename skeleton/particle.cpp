@@ -4,7 +4,7 @@
 #include <math.h>
 using namespace physx;
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 accel, double dumping, PxShape* shape, Vector4 color = Vector4(1.0,1.0,1.0,1.0)) : _accel(accel), _vel(vel), _dumping(dumping) {
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 accel, double mass, double dumping, PxShape* shape, Vector4 color = Vector4(1.0,1.0,1.0,1.0)) : _accel(accel), _vel(vel), _dumping(dumping), _mass(mass) {
 	_pose = physx::PxTransform(pos);
 	_renderItem = new RenderItem(shape, &_pose, color);
 }
@@ -23,3 +23,12 @@ Particle::integrate(double t){
 
 Vector3
 Particle::getPos()const { return _pose.p; }
+
+Vector3
+Particle::getAccel()const { return _accel; }
+
+double
+Particle::getMass()const { return _mass; }
+
+void
+Particle::setAccel(Vector3 accel) { _accel = accel; }

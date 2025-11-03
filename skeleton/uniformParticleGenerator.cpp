@@ -2,10 +2,10 @@
 #include "particle.h"
 
 UniformParticleGenerator::UniformParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape,
-	double lifeTime, double lifeDistance, double dumping, Vector4 color, int partsPerFrame, double genProb, Vector3 sourceVar,
-	Vector3 velVar, double lifeVar, double distanceVar, Vector4 colorVar) : _velocityVar(sourceVar), _particleSourceVar(velVar),
-	_lifeTimeVar(lifeVar), _lifeDistanceVar(distanceVar), _colorVar(colorVar),
-	ParticleGenerator(particleSource, vel, accel, shape, lifeTime, lifeDistance, dumping, color, partsPerFrame, genProb) {}
+	double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, int partsPerFrame, double genProb, Vector3 sourceVar,
+	Vector3 velVar, double lifeVar, double distanceVar, double massVar, Vector4 colorVar) : _velocityVar(sourceVar), _particleSourceVar(velVar),
+	_lifeTimeVar(lifeVar), _lifeDistanceVar(distanceVar), _massVar(massVar), _colorVar(colorVar),
+	ParticleGenerator(particleSource, vel, accel, shape, lifeTime, lifeDistance, mass, dumping, color, partsPerFrame, genProb) {}
 
 std::vector<ParticleDT>
 UniformParticleGenerator::generateParticle() {
@@ -19,7 +19,8 @@ UniformParticleGenerator::generateParticle() {
 			vel = Vector3(_velocity.x + _u(_mt) * _velocityVar.x, _velocity.y + _u(_mt) * _velocityVar.y, _velocity.z + _u(_mt) * _velocityVar.z);
 		particle.origin = pSource;
 		Vector4 color = Vector4(_color.x + _u(_mt) * _colorVar.x, _color.y + _u(_mt) * _colorVar.y, _color.z + _u(_mt) * _colorVar.z, _color.w + _u(_mt) * _colorVar.w);
-		particle.particle = new Particle(pSource, vel, _acceleration, _dumping, _shape, color);
+		double mass = _mass + _u(_mt) * _massVar;
+		particle.particle = new Particle(pSource, vel, _acceleration, _dumping, mass, _shape, color);
 		particles.push_back(particle);
 	}
 	return particles;

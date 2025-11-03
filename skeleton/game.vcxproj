@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="forceGenerator.cpp" />
+    <ClCompile Include="gaussianParticleGenerator.cpp" />
+    <ClCompile Include="gravityForceGenerator.cpp" />
+    <ClCompile Include="gun.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="particle.cpp" />
+    <ClCompile Include="particleGenerator.cpp" />
+    <ClCompile Include="particleSystem.cpp" />
+    <ClCompile Include="projectile.cpp" />
+    <ClCompile Include="RenderUtils.cpp" />
+    <ClCompile Include="Render\Camera.cpp" />
+    <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="uniformParticleGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="callbacks.hpp" />
+    <ClInclude Include="core.hpp" />
+    <ClInclude Include="forceGenerator.h" />
+    <ClInclude Include="gaussianParticleGenerator.h" />
+    <ClInclude Include="gravityForceGenerator.h" />
+    <ClInclude Include="gun.h" />
+    <ClInclude Include="particle.h" />
+    <ClInclude Include="particleGenerator.h" />
+    <ClInclude Include="particleSystem.h" />
+    <ClInclude Include="projectile.h" />
+    <ClInclude Include="RenderUtils.hpp" />
+    <ClInclude Include="Render\Camera.h" />
+    <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="uniformParticleGenerator.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DF91286C-A048-0858-C381-C4106C184C0B}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -252,34 +284,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="gaussianParticleGenerator.cpp" />
-    <ClCompile Include="gun.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="particle.cpp" />
-    <ClCompile Include="particleGenerator.cpp" />
-    <ClCompile Include="particleSystem.cpp" />
-    <ClCompile Include="projectile.cpp" />
-    <ClCompile Include="RenderUtils.cpp" />
-    <ClCompile Include="Render\Camera.cpp" />
-    <ClCompile Include="Render\Render.cpp" />
-    <ClCompile Include="uniformParticleGenerator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="core.hpp" />
-    <ClInclude Include="gaussianParticleGenerator.h" />
-    <ClInclude Include="gun.h" />
-    <ClInclude Include="particle.h" />
-    <ClInclude Include="particleGenerator.h" />
-    <ClInclude Include="particleSystem.h" />
-    <ClInclude Include="projectile.h" />
-    <ClInclude Include="RenderUtils.hpp" />
-    <ClInclude Include="Render\Camera.h" />
-    <ClInclude Include="Render\Render.h" />
-    <ClInclude Include="uniformParticleGenerator.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

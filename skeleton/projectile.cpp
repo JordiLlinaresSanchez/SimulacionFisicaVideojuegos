@@ -4,7 +4,7 @@
 using namespace physx;
 
 Projectile::Projectile(Vector3 pos, Vector3 vel, Vector3 accel, double mass, double dumping, PxShape* shape, ProjType proj = None,  Vector4 color = Vector4(1.0, 1.0, 1.0, 1.0)) 
-	: _mass(mass), _simMass(0), Particle(pos, vel, accel, dumping, shape, color){
+	: _simMass(0), Particle(pos, vel, accel, dumping, mass, shape, color){
 
 	switch(proj)
 	{
@@ -33,7 +33,7 @@ Projectile::Projectile(Vector3 pos, Vector3 vel, Vector3 accel, double mass, dou
 }
 
 Projectile::Projectile(Vector3 pos, Vector3 dir, Vector3 accel, double mass, double dumping, ProjType proj)
-	:_mass (mass), _simMass(0), Particle(pos, dir, accel, dumping, CreateShape(PxSphereGeometry(1.0f)), Vector4()) {
+	: _simMass(0), Particle(pos, dir, accel, dumping, mass, CreateShape(PxSphereGeometry(1.0f)), Vector4()) {
 	Vector3 vel = Vector3();
 	switch (proj)
 	{
@@ -67,7 +67,7 @@ Projectile::Projectile(Vector3 pos, Vector3 dir, Vector3 accel, double mass, dou
 	}
 }
 
-Projectile::Projectile() : Particle(Vector3(), Vector3(), Vector3(), 1, CreateShape(PxSphereGeometry(8.0f)), Vector4()){
+Projectile::Projectile() : Particle(Vector3(), Vector3(), Vector3(), 1, 0, CreateShape(PxSphereGeometry(8.0f)), Vector4()){
 
 }
 

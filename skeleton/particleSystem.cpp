@@ -1,12 +1,14 @@
 #include "particleSystem.h"
 #include "particle.h"
+#include "forceGenerator.h"
 
-ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>()) : 
-							   _particles(particles), _particleGenerators(particleGenerators) {}
+ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>(), std::vector<ForceGenerator*> forces = std::vector<ForceGenerator*>()) :
+							   _particles(particles), _particleGenerators(particleGenerators), _forceGenerators(forces) {}
 
 ParticleSystem::~ParticleSystem() {
 	for (ParticleGenerator* pg : _particleGenerators) delete pg;
 	for (ParticleDT& p : _particles) delete p.particle;
+	for (ForceGenerator* fg : _forceGenerators) delete fg;
 }
 
 void
@@ -16,6 +18,7 @@ ParticleSystem::addParticleGenerator(ParticleGenerator* particleGenerator) {
 
 void
 ParticleSystem::update(double t) {
+	for (ForceGenerator* fg : _forceGenerators) fg->update(t);
 	integrateParticles(t);
 	deleteParticles(t);
 	generateParticle();
@@ -23,7 +26,17 @@ ParticleSystem::update(double t) {
 
 void 
 ParticleSystem::integrateParticles(double t) {
-	for (ParticleDT& part : _particles) part.particle->integrate(t);
+	for (ParticleDT& part : _particles) {
+		Vector3 force(0);
+		for (ForceGenerator* fg : _forceGenerators) {
+			if (fg->checkCondition(part.particle)) {
+				force += fg->applyForce(part.particle);
+			}
+		}
+		part.particle->setAccel(force / part.particle->getMass());
+		part.particle->integrate(t);
+
+	}
 }
 
 void 
@@ -38,7 +51,7 @@ void
 ParticleSystem::deleteParticles(double t) {
 	for (int i = _particles.size() - 1; i >= 0; --i) {
 		_particles[i].lifeTime -= t;
-		if (/*_particles[i].lifeDistance < (_particles[i].particle->getPos() - _particles[i].origin).magnitude() ||*/ _particles[i].lifeTime<0) {
+		if (_particles[i].lifeDistance < (_particles[i].particle->getPos() - _particles[i].origin).magnitude() || _particles[i].lifeTime<0) {
 			auto temp = _particles[i];
 			_particles[i] = _particles[_particles.size() - 1];
 			_particles[_particles.size() - 1] = temp;

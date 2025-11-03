@@ -16,6 +16,8 @@
 #include "gaussianParticleGenerator.h"
 #include "uniformParticleGenerator.h"
 #include "particleSystem.h"
+#include "forceGenerator.h"
+#include "gravityForceGenerator.h"
 
 #define _USE_MATH_DEFINES
 
@@ -55,9 +57,9 @@ void initPhysics(bool interactive)
 
 	gPvd = PxCreatePvd(*gFoundation);
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
-	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
+	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 
-	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
+	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
@@ -72,27 +74,29 @@ void initPhysics(bool interactive)
 
 	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
 	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
-	
+
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
 	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
 
 	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
 
-	ParticleGenerator* pg0 = new GaussianParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 10.0, 0.0), Vector3(0.0, -9.4, 0.0),
-		sphere, 5.0, 150.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0, 
-		Vector4(0.0, 0.2, 0.05, 0.0));
+	ParticleGenerator* pg0 = new GaussianParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 10.0, 0.0), Vector3(0.0),
+		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
+		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
 
-	ParticleGenerator* pg1 = new UniformParticleGenerator(Vector3(7.0, 10.0, 7.0), Vector3(10.0, 5.0, 10.0), Vector3(0.0, -9.4, 0.0),
-		sphere, 5.0, 150.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
-		Vector4(0.0, 0.2, 0.05, 0.0));
+	ParticleGenerator* pg1 = new UniformParticleGenerator(Vector3(7.0, 10.0, 7.0), Vector3(10.0, 5.0, 10.0), Vector3(0.0),
+		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
+		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
 
 	std::vector<ParticleGenerator*> vpg(0);
 	vpg.push_back(pg0);
 	//vpg.push_back(pg1);
-	pS = new ParticleSystem(vpg, std::vector<ParticleDT>());
+	std::vector<ForceGenerator*> vfg(0);
+	vfg.push_back(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
+	pS = new ParticleSystem(vpg, std::vector<ParticleDT>(), vfg);
 
-	}
+}
 
 
 // Function to configure what happens in each step of physics
