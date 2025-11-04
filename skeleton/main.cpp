@@ -19,6 +19,7 @@
 #include "forceGenerator.h"
 #include "gravityForceGenerator.h"
 #include "windGenerator.h"
+#include "hurricaneGenerator.h"
 
 #define _USE_MATH_DEFINES
 
@@ -82,22 +83,23 @@ void initPhysics(bool interactive)
 
 	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
 
-	ParticleGenerator* pg0 = new GaussianParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 10.0, 0.0), Vector3(0.0),
-		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
-		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
+	ParticleGenerator* pg0 = new GaussianParticleGenerator(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0),
+		sphere, 5.0, 1200.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 12, 2.0, Vector3(20.0, 0.0, 20.0), Vector3(0.0, 0.0, 0.0), 1.5, 3.0,
+		0.1, Vector4(0.0, 0.2, 0.05, 0.0));
 
-	ParticleGenerator* pg1 = new UniformParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 20.0, 0.0), Vector3(0.0),
-		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(2, 5.0, 2), 1.5, 3.0,
-		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
+	ParticleGenerator* pg1 = new GaussianParticleGenerator(Vector3(-10.0, 10.0, -10.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0),
+		sphere, 5.0, 1200.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 2.0, Vector3(20.0, 0.0, 20.0), Vector3(0.0, 0.0, 0.0), 1.5, 3.0,
+		0.1, Vector4(0.0, 0.2, 0.05, 0.0));
 
 	std::vector<ParticleGenerator*> vpg(0);
 	vpg.push_back(pg0);
 	//vpg.push_back(pg1);
 	std::vector<ForceGenerator*> vfg(0);
 	vfg.push_back(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
-	vfg.push_back(new WindGenerator(Vector3(-23.0, 0.0, -23.0), Vector3(0.0), 10.0));
+	//vfg.push_back(new WindGenerator(Vector3(-5.0, 0.0, -5.0), Vector3(0.0), 50.0));
+	vfg.push_back(new HurricaneGenerator(2, 100, 0.8, Vector3(0.0), 150.0));
 	pS = new ParticleSystem(vpg, std::vector<ParticleDT>(), vfg);
-
+	
 }
 
 

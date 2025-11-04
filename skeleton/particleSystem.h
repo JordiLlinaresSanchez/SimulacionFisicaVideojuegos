@@ -21,7 +21,8 @@ private:
 public:
 	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, std::vector<ParticleDT> particles, std::vector<ForceGenerator*> forceGen);
 	~ParticleSystem();
-	void generateParticles();
+	void generateParticles(Particle* part, double lifeDistance, double lifeTime, Vector3 origin);
+	void generateParticles(ParticleDT part);
 	void addParticleGenerator(ParticleGenerator* particleGenerator);
 	void update(double t);
 };

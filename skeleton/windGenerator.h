@@ -13,6 +13,6 @@ public:
 	WindGenerator(Vector3 windVel, Vector3 center, double radius);
 	void update(double t) override;
 	bool checkCondition(const Particle* particle) override;
-	Vector3 applyForce(Particle* particle) override;
+	virtual Vector3 applyForce(Particle* particle) override;
 };
 

@@ -19,5 +19,5 @@ WindGenerator::checkCondition(const Particle* particle) {
 
 Vector3 
 WindGenerator::applyForce(Particle* particle) {
-	return 0.25 * (_magnitude - particle->getVel());
+	return 0.5 * (_magnitude - particle->getVel());
 }

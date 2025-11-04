@@ -17,6 +17,21 @@ ParticleSystem::addParticleGenerator(ParticleGenerator* particleGenerator) {
 	_particleGenerators.push_back(particleGenerator);
 }
 
+void 
+ParticleSystem::generateParticles(Particle* part, double lifeDistance, double lifeTime, Vector3 origin) {
+	ParticleDT newPart;
+	newPart.lifeDistance = lifeDistance;
+	newPart.lifeTime = lifeTime;
+	newPart.origin = origin;
+	newPart.particle = part;
+	_particles.push_back(newPart);
+}
+
+void
+ParticleSystem::generateParticles(ParticleDT part) {
+	_particles.push_back(part);
+}
+
 void
 ParticleSystem::update(double t) {
 	for (ForceGenerator* fg : _forceGenerators) fg->update(t);
