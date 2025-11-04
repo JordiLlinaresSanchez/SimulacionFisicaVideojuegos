@@ -27,6 +27,9 @@ Particle::getPos()const { return _pose.p; }
 Vector3
 Particle::getAccel()const { return _accel; }
 
+Vector3
+Particle::getVel()const { return _vel; }
+
 double
 Particle::getMass()const { return _mass; }
 

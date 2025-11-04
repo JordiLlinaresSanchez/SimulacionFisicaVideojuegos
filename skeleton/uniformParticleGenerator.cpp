@@ -19,7 +19,7 @@ UniformParticleGenerator::generateParticle() {
 			vel = Vector3(_velocity.x + _u(_mt) * _velocityVar.x, _velocity.y + _u(_mt) * _velocityVar.y, _velocity.z + _u(_mt) * _velocityVar.z);
 		particle.origin = pSource;
 		Vector4 color = Vector4(_color.x + _u(_mt) * _colorVar.x, _color.y + _u(_mt) * _colorVar.y, _color.z + _u(_mt) * _colorVar.z, _color.w + _u(_mt) * _colorVar.w);
-		double mass = _mass + _u(_mt) * _massVar;
+		double mass = abs(_mass + _u(_mt) * _massVar);
 		particle.particle = new Particle(pSource, vel, _acceleration, _dumping, mass, _shape, color);
 		particles.push_back(particle);
 	}

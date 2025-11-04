@@ -17,6 +17,7 @@ public:
 
 	Vector3 getPos()const;
 	Vector3 getAccel()const;
+	Vector3 getVel()const;
 	double getMass()const;
 
 	void setAccel(Vector3 accel);

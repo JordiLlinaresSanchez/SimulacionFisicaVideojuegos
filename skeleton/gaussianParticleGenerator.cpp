@@ -15,10 +15,12 @@ GaussianParticleGenerator::generateParticle() {
 		ParticleDT particle;
 		particle.lifeDistance = _lifeDistance + _u(_mt) * _lifeDistanceVar;
 		particle.lifeTime = _lifeTime + _u(_mt) * _lifeTimeVar;
+
 		Vector3 pSource = Vector3(_particleSource.x + _u(_mt) * _particleSourceVar.x, _particleSource.y + _u(_mt) * _particleSourceVar.y, _particleSource.z + _u(_mt) * _particleSourceVar.z),
 			vel = Vector3(_velocity.x + _u(_mt) * _velocityVar.x, _velocity.y + _u(_mt) * _velocityVar.y, _velocity.z + _u(_mt) * _velocityVar.z);
+
 		particle.origin = pSource;
-		double mass = _mass + _u(_mt) * _massVar;
+		double mass = abs(_mass + _u(_mt) * _massVar);
 		Vector4 color = Vector4(_color.x + _u(_mt) * _colorVar.x, _color.y + _u(_mt) * _colorVar.y, _color.z + _u(_mt) * _colorVar.z, _color.w + _u(_mt) * _colorVar.w);
 		particle.particle = new Particle(pSource, vel, _acceleration, mass, _dumping, _shape, color);
 		particles.push_back(particle);

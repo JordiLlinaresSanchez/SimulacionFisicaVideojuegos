@@ -1,6 +1,7 @@
 #include "particleSystem.h"
 #include "particle.h"
 #include "forceGenerator.h"
+#include "iostream"
 
 ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>(), std::vector<ForceGenerator*> forces = std::vector<ForceGenerator*>()) :
 							   _particles(particles), _particleGenerators(particleGenerators), _forceGenerators(forces) {}

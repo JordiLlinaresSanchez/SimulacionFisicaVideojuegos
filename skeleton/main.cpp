@@ -18,6 +18,7 @@
 #include "particleSystem.h"
 #include "forceGenerator.h"
 #include "gravityForceGenerator.h"
+#include "windGenerator.h"
 
 #define _USE_MATH_DEFINES
 
@@ -85,8 +86,8 @@ void initPhysics(bool interactive)
 		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
 		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
 
-	ParticleGenerator* pg1 = new UniformParticleGenerator(Vector3(7.0, 10.0, 7.0), Vector3(10.0, 5.0, 10.0), Vector3(0.0),
-		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(0.5, 5.0, 0.5), 1.5, 3.0,
+	ParticleGenerator* pg1 = new UniformParticleGenerator(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 20.0, 0.0), Vector3(0.0),
+		sphere, 5.0, 150.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 1.0, Vector3(5.0, 0.0, 5.0), Vector3(2, 5.0, 2), 1.5, 3.0,
 		0.5, Vector4(0.0, 0.2, 0.05, 0.0));
 
 	std::vector<ParticleGenerator*> vpg(0);
@@ -94,6 +95,7 @@ void initPhysics(bool interactive)
 	//vpg.push_back(pg1);
 	std::vector<ForceGenerator*> vfg(0);
 	vfg.push_back(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
+	vfg.push_back(new WindGenerator(Vector3(-23.0, 0.0, -23.0), Vector3(0.0), 10.0));
 	pS = new ParticleSystem(vpg, std::vector<ParticleDT>(), vfg);
 
 }

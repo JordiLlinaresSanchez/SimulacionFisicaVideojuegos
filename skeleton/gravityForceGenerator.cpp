@@ -1,7 +1,7 @@
 #include "gravityForceGenerator.h"
 #include "particle.h"
 
-GravityForceGenerator::GravityForceGenerator(Vector3 force) : ForceGenerator(Vector3(), force){}
+GravityForceGenerator::GravityForceGenerator(Vector3 force) : ForceGenerator(force){}
 
 void 
 GravityForceGenerator::update(double t){}
@@ -13,5 +13,5 @@ GravityForceGenerator::checkCondition(const Particle* p){
 
 Vector3
 GravityForceGenerator::applyForce(Particle* p) {
-	return p->getMass() * _force;
+	return p->getMass() * _magnitude;
 }
