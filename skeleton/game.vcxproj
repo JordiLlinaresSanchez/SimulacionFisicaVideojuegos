@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="explosionGenerator.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
     <ClCompile Include="gaussianParticleGenerator.cpp" />
     <ClCompile Include="gravityForceGenerator.cpp" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="explosionGenerator.h" />
     <ClInclude Include="forceGenerator.h" />
     <ClInclude Include="gaussianParticleGenerator.h" />
     <ClInclude Include="gravityForceGenerator.h" />

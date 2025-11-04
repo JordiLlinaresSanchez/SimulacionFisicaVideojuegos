@@ -24,6 +24,7 @@ public:
 	void generateParticles(Particle* part, double lifeDistance, double lifeTime, Vector3 origin);
 	void generateParticles(ParticleDT part);
 	void addParticleGenerator(ParticleGenerator* particleGenerator);
+	void addForceGenerator(ForceGenerator* fg);
 	void update(double t);
 };
 
