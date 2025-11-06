@@ -22,6 +22,7 @@ protected:
 
 public:
 	ParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, int partsPerFrame, double genProb);
+	~ParticleGenerator();
 	virtual std::vector<ParticleDT> generateParticle()=0;
 
 	inline void setParticleSource(Vector3 pSource) { _particleSource = pSource; }

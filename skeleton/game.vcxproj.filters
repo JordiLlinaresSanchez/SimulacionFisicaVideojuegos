@@ -60,7 +60,19 @@
     <ClCompile Include="hurricaneGenerator.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="explosionGenerator.cpp" />
+    <ClCompile Include="explosionGenerator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="pin.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="locatedGravity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -111,6 +123,21 @@
     <ClInclude Include="hurricaneGenerator.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="explosionGenerator.h" />
+    <ClInclude Include="explosionGenerator.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="checkML.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pin.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="locatedGravity.h" />
   </ItemGroup>
 </Project>

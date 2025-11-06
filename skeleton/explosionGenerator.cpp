@@ -3,7 +3,7 @@
 #include "cmath"
 
 ExplosionGenerator::ExplosionGenerator(Vector3 pos, double radius, double intensity, double tau): 
-	_radius(radius), _intensity(intensity), _tau(tau), _elapsedTime(0), _initPos(pos), ForceGenerator(Vector3()){}
+	_radius(radius), _intensity(intensity), _tau(tau), _initPos(pos), ForceGenerator(Vector3()){}
 
 void 
 ExplosionGenerator::update(double t) {

@@ -12,6 +12,7 @@ protected:
 	double _dumping, _mass;
 public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 accel, double mass, double dumping, physx::PxShape* shape, Vector4 color);
+	Particle(physx::PxTransform& pose, Vector3 vel, Vector3 accel, double mass, double dumping, physx::PxShape* shape, Vector4 color);
 	~Particle();
 
 
@@ -22,6 +23,7 @@ public:
 
 	void setAccel(Vector3 accel);
 
+	//aa
 	virtual void integrate(double t);
 };
 

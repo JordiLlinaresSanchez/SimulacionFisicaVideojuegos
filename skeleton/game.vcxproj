@@ -26,19 +26,24 @@
     <ClCompile Include="gravityForceGenerator.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="hurricaneGenerator.cpp" />
+    <ClCompile Include="locatedGravity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="particleGenerator.cpp" />
     <ClCompile Include="particleSystem.cpp" />
+    <ClCompile Include="pin.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="uniformParticleGenerator.cpp" />
     <ClCompile Include="windGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
+    <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="explosionGenerator.h" />
     <ClInclude Include="forceGenerator.h" />
@@ -46,13 +51,17 @@
     <ClInclude Include="gravityForceGenerator.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="hurricaneGenerator.h" />
+    <ClInclude Include="locatedGravity.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="particleGenerator.h" />
     <ClInclude Include="particleSystem.h" />
+    <ClInclude Include="pin.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Scenes.h" />
     <ClInclude Include="uniformParticleGenerator.h" />
     <ClInclude Include="windGenerator.h" />
   </ItemGroup>

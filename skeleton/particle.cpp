@@ -6,8 +6,16 @@ using namespace physx;
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 accel, double mass, double dumping, PxShape* shape, Vector4 color = Vector4(1.0,1.0,1.0,1.0)) : _accel(accel), _vel(vel), _dumping(dumping), _mass(mass) {
 	_pose = physx::PxTransform(pos);
-	_renderItem = new RenderItem(shape, &_pose, color);
+	if (shape != NULL) _renderItem = new RenderItem(shape, &_pose, color);
+	else _renderItem = NULL;
 }
+
+Particle::Particle(PxTransform& pos, Vector3 vel, Vector3 accel, double mass, double dumping, PxShape* shape, Vector4 color = Vector4(1.0, 1.0, 1.0, 1.0)) : _accel(accel), _vel(vel), _dumping(dumping), _mass(mass) {
+	_pose = physx::PxTransform(pos);
+	if (shape != NULL) _renderItem = new RenderItem(shape, &_pose, color);
+	else _renderItem = NULL;
+}
+
 Particle::~Particle(){
 	DeregisterRenderItem(_renderItem);
 	delete _renderItem;

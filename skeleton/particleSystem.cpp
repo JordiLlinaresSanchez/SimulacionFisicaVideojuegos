@@ -3,7 +3,7 @@
 #include "forceGenerator.h"
 #include "iostream"
 
-ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>(), std::vector<ForceGenerator*> forces = std::vector<ForceGenerator*>()) :
+ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, std::vector<ParticleDT> particles, std::vector<ForceGenerator*> forces) :
 							   _particles(particles), _particleGenerators(particleGenerators), _forceGenerators(forces) {}
 
 ParticleSystem::~ParticleSystem() {
@@ -23,7 +23,7 @@ ParticleSystem::addForceGenerator(ForceGenerator* fg) {
 }
 
 void 
-ParticleSystem::generateParticles(Particle* part, double lifeDistance, double lifeTime, Vector3 origin) {
+ParticleSystem::generateParticles(Particle* part, Vector3 origin, double lifeDistance, double lifeTime) {
 	ParticleDT newPart;
 	newPart.lifeDistance = lifeDistance;
 	newPart.lifeTime = lifeTime;

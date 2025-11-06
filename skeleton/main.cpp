@@ -10,6 +10,8 @@
 
 #include <iostream>
 
+//#include "checkML.h"
+
 #include "particle.h"
 #include "projectile.h"
 #include "gun.h"
@@ -21,6 +23,8 @@
 #include "windGenerator.h"
 #include "hurricaneGenerator.h"
 #include "explosionGenerator.h"
+#include "Scene.h"
+#include "Scenes.h"
 
 #define _USE_MATH_DEFINES
 
@@ -42,18 +46,17 @@ PxPvd*                  gPvd        = NULL;
 
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
-ContactReportCallback gContactReportCallback;
+ContactReportCallback	gContactReportCallback;
 
-Gun*					gun			= NULL;
-ParticleSystem*			pS			= NULL;
+Scene*					actScene	= NULL;
 
 
-std::vector<RenderItem*> RI (0);
 
 
 // Initialize physics engine 
 void initPhysics(bool interactive)
 {
+
 	PX_UNUSED(interactive);
 
 	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
@@ -75,32 +78,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
-	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
-
-	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
-	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
-	RI.push_back(new RenderItem(shape, new physx::PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
-
-	gun = new Gun(Vector3(0.0, 0.0, 0.0), Vector3(-1.0, 0.0, -1.0), Vector3(0.0, -9.4, 0.0), 5.0, 40.0, 0.9, CanonBall);
-
-	ParticleGenerator* pg0 = new GaussianParticleGenerator(Vector3(0.0, 20.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0),
-		sphere, 20.0, 100.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 2.0, Vector3(20.0, 0.0, 20.0), Vector3(0.0, 0.0, 0.0), 1.5, 3.0,
-		0.1, Vector4(0.0, 0.2, 0.05, 0.0));
-
-	ParticleGenerator* pg1 = new GaussianParticleGenerator(Vector3(-10.0, 10.0, -10.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0),
-		sphere, 5.0, 1200.0, 1.0, 0.9, Vector4(0.4, 0.5, 1.0, 1.0), 3, 2.0, Vector3(20.0, 0.0, 20.0), Vector3(0.0, 0.0, 0.0), 1.5, 3.0,
-		0.1, Vector4(0.0, 0.2, 0.05, 0.0));
-
-	std::vector<ParticleGenerator*> vpg(0);
-	vpg.push_back(pg0);
-	//vpg.push_back(pg1);
-	std::vector<ForceGenerator*> vfg(0);
-	vfg.push_back(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
-	//vfg.push_back(new WindGenerator(Vector3(-5.0, 0.0, -5.0), Vector3(0.0), 50.0));
-	//vfg.push_back(new HurricaneGenerator(2, 100, 1.0, Vector3(0.0), 170.0));
-	pS = new ParticleSystem(vpg, std::vector<ParticleDT>(), vfg);
-	
+	actScene = new GameScene();
+	actScene->initPhysics(interactive);
 }
 
 
@@ -110,11 +89,9 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
+	actScene->update(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	gun->integrate(t);
-	pS->update(t);
 }
 
 // Function to clean data
@@ -139,39 +116,9 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-	switch(toupper(key))
+	actScene->keyPress(key, camera);
+	switch (toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
-	case 'B':
-	{
-		gun->setDir(-camera.q.getBasisVector2());
-		gun->setPos(camera.p );
-		gun->setType(GunBullet);
-		gun->shoot();
-		break;
-	}
-	case 'N': 
-	{
-		gun->setDir(-camera.q.getBasisVector2());
-		gun->setPos(camera.p);
-		gun->setType(CanonBall);
-		gun->shoot();
-		break;
-	}
-	case 'M':
-	{
-		gun->setDir(-camera.q.getBasisVector2());
-		gun->setPos(camera.p);
-		gun->setType(TankBullet);
-		gun->shoot();
-		break;
-	}
-	case 'E':
-	{
-		pS->addForceGenerator(new ExplosionGenerator(Vector3(0.0, 10.0, 0.0), 20.0, 1000.0, 5.0));
-		break;
-	}
 	default:
 		break;
 	}
@@ -196,6 +143,10 @@ int main(int, const char*const*)
 		stepPhysics(false);
 	cleanupPhysics(false);
 #endif
+	/*delete gun;
+	delete	pS;
+	for (auto a : RI) delete a;*/
+
 
 	return 0;
 }

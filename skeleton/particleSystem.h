@@ -1,5 +1,6 @@
 #pragma once
 
+#include <limits>
 #include "particleGenerator.h"
 
 class ForceGenerator;
@@ -19,9 +20,9 @@ private:
 	void deleteParticles(double t);
 
 public:
-	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, std::vector<ParticleDT> particles, std::vector<ForceGenerator*> forceGen);
+	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>(), std::vector<ForceGenerator*> forces = std::vector<ForceGenerator*>());
 	~ParticleSystem();
-	void generateParticles(Particle* part, double lifeDistance, double lifeTime, Vector3 origin);
+	void generateParticles(Particle* part, Vector3 origin, double lifeDistance, double lifeTime = std::numeric_limits<double>::infinity());
 	void generateParticles(ParticleDT part);
 	void addParticleGenerator(ParticleGenerator* particleGenerator);
 	void addForceGenerator(ForceGenerator* fg);

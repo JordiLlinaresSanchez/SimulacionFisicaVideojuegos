@@ -8,10 +8,12 @@ class ForceGenerator
 {
 protected:
 	Vector3 _magnitude;
+	double _elapsedTime;
 public:
 	ForceGenerator( Vector3 force);
 	Vector3 getForce() const{ return _magnitude; }
 	void setForce(Vector3 force) { _magnitude = force; }
+	void restartTimer() { _elapsedTime = 0.0; }
 	virtual void update(double t) = 0;
 	virtual bool checkCondition(const Particle* particle) = 0;
 	virtual Vector3 applyForce(Particle* particle) = 0;

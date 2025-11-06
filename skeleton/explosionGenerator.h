@@ -3,7 +3,7 @@
 class ExplosionGenerator : public ForceGenerator
 {
 protected:
-	double _radius, _tau, _elapsedTime, _intensity;
+	double _radius, _tau, _intensity;
 	Vector3 _initPos;
 
 public:
