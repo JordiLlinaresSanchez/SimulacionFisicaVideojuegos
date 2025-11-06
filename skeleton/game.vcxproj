@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ballLauncher.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="explosionGenerator.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
@@ -38,10 +39,12 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scenes.cpp" />
+    <ClCompile Include="specialParticleSystem.cpp" />
     <ClCompile Include="uniformParticleGenerator.cpp" />
     <ClCompile Include="windGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ballLauncher.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />
@@ -62,6 +65,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scenes.h" />
+    <ClInclude Include="specialParticleSystem.h" />
     <ClInclude Include="uniformParticleGenerator.h" />
     <ClInclude Include="windGenerator.h" />
   </ItemGroup>

@@ -13,7 +13,6 @@ private:
 public:
 	UniformParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping,
 		Vector4 color, int partsPerFrame, double genProb, Vector3 sourceVar, Vector3 velVar, double lifeVar, double distanceVar, double massVar, Vector4 colorVar);
-	std::vector<ParticleDT> generateParticle() override;
-
+	virtual std::vector<ParticleDT> generateParticle() override;
 };
 

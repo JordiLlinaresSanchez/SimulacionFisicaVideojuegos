@@ -10,7 +10,7 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 particleSource, Vecto
 std::vector<ParticleDT>
 UniformParticleGenerator::generateParticle() {
 	std::vector<ParticleDT> particles(0);
-	for (int i = 0; i < _partsPerFrame; i++) {
+	for (int i = 0; i < _partsPerFrame && _generate; i++) {
 		if (abs(_u(_mt)) > _genProb) continue;
 		ParticleDT particle;
 		particle.lifeDistance = _lifeDistance + _u(_mt) * _lifeDistanceVar;

@@ -18,7 +18,7 @@ private:
 	ProjType _type;
 	std::vector<projInfo> _projectiles;
 public:
-	Gun(Vector3 pos, Vector3 dir, Vector3 accel, double lifeTime, double mass, double dumping, ProjType type);
+	Gun(Vector3 pos = Vector3(0.0), Vector3 dir = Vector3(0.0), Vector3 accel = Vector3(0.0, -9.4, 0.0), double lifeTime = 5.0, double mass = 1.0, double dumping = 0.9, ProjType type = None);
 	~Gun();
 	void shoot();
 	void clean(double t);

@@ -8,7 +8,7 @@ class ForceGenerator;
 class ParticleSystem
 {
 	
-private:
+protected:
 
 	Vector3 _particleSource;
 	std::vector<ParticleDT> _particles;
@@ -16,16 +16,16 @@ private:
 	std::vector<ForceGenerator*> _forceGenerators;
 
 	void integrateParticles(double t);
-	void generateParticle();
 	void deleteParticles(double t);
 
 public:
 	ParticleSystem(std::vector<ParticleGenerator*> particleGenerators = std::vector<ParticleGenerator*>(), std::vector<ParticleDT> particles = std::vector<ParticleDT>(), std::vector<ForceGenerator*> forces = std::vector<ForceGenerator*>());
 	~ParticleSystem();
-	void generateParticles(Particle* part, Vector3 origin, double lifeDistance, double lifeTime = std::numeric_limits<double>::infinity());
-	void generateParticles(ParticleDT part);
+	void generateParticle();
+	void addParticle(Particle* part, Vector3 origin, double lifeDistance, double lifeTime = std::numeric_limits<double>::infinity());
+	void addParticle(ParticleDT part);
 	void addParticleGenerator(ParticleGenerator* particleGenerator);
 	void addForceGenerator(ForceGenerator* fg);
-	void update(double t);
+	virtual void update(double t);
 };
 

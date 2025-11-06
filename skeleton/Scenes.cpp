@@ -25,6 +25,8 @@
 #include "explosionGenerator.h"
 #include "pin.h"
 #include "locatedGravity.h"
+#include "specialParticleSystem.h"
+#include "ballLauncher.h"
 
 
 using namespace physx;
@@ -131,7 +133,7 @@ void
 Scene1::keyPress(unsigned char key, const PxTransform& camera) {
 	switch (toupper(key)) {
 	case 'E': {
-		explosion->restartTimer();
+		explosion->setTimer(0.0);
 	}
 	default:
 		break;
@@ -182,53 +184,79 @@ Scene2::keyPress(unsigned char key, const PxTransform& camera) {
 	}
 }
 
-GameScene::GameScene() :RI(std::vector<RenderItem*>(0)), pS(NULL) {}
+GameScene::GameScene() :RI(std::vector<RenderItem*>(0)), pS(NULL), ballSystem(NULL) {}
 
 GameScene::~GameScene() {
 	for (auto ri : RI) delete ri;
 	delete pS;
+	delete explosion;
+	delete ballSystem;
+	delete explosion;
+	delete balls;
 }
 
 void
 GameScene::generatePins() {
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		double distance = 0.4, pos = 0;
 		for (int j = 0; j < i+1; ++j) {
 			pos = distance * j;
 			Vector3 initPos = Vector3(30.0 + distance * i, 0.4, 0.0 - (distance * i / 2) + distance * j);
-			pS->generateParticles(new Pin(PxTransform(initPos, PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector3(0.0), Vector3(0.0), 7.3, 0.9), initPos, 100.0);
+			pS->addParticle(new Pin(PxTransform(initPos, PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector3(0.0), Vector3(0.0), 7.3, 0.9), initPos, 100.0);
 		}
 	}
 }
 
 void
 GameScene::initPhysics(bool interactive) {
-	PxShape* shape = CreateShape(PxCapsuleGeometry(0.15, 0.33));
-	PxShape* sphere = CreateShape(PxSphereGeometry(0.33));
+	PxShape* sphere = CreateShape(PxSphereGeometry(0.15));
+	PxShape* confettiShape = CreateShape(PxSphereGeometry(0.05));
 	PxShape* plane = CreateShape(PxBoxGeometry(1.2, 0.1, 20.0));
 
 	RI.push_back(new RenderItem(plane, new PxTransform(Vector3(15.0, 0.0, 0.0), PxQuat(3.1415/2, Vector3(0.0, 1.0, 0.0))), Vector4(0.23, 0.22, 0.1, 1.0)));
-	RI.push_back(new RenderItem(sphere, new PxTransform(Vector3(0.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 1.0, 1.0)));
 
 	pS = new ParticleSystem();
-	//generatePins();
+	ballSystem = new SpecialParticleSystem();
 
+	balls = new BallLauncher(Vector3(0.0), Vector3(10.0, 0.0, 0.0), sphere, 10.0, 50.0, 10.0, Vector4(0.7, 0.1, 0.1, 1.0), Vector3(2.0, 1.0, 0.1), Vector4(0.2, 0.0, 0.0, 0.0));
+	ballSystem->addParticleGenerator(balls);
 
-	/*ParticleGenerator* pg = 
-	pS->addParticleGenerator(pg);*/
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(1.0, 0.3, 0.3, 1.0), 1, 0.01, Vector3(1.0, 1.0, 1.0), Vector3(3.0, 2.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 1.0, 0.3, 1.0), 1, 0.011, Vector3(1.1, 1.1, 1.1), Vector3(2.0, 6.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 0.3, 1.0, 1.0), 1, 0.012, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.0, 2.5), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
 
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(1.0, 0.3, 0.3, 1.0), 1, 0.014, Vector3(1.0, 1.0, 1.0), Vector3(2.0, 2.0, 2.5), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 1.0, 0.3, 1.0), 1, 0.013, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.5, 3.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 0.3, 1.0, 1.0), 1, 0.015, Vector3(1.1, 1.1, 1.1), Vector3(2.5, 3.0, 2.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+
+	for (auto c : confetti) {
+		pS->addParticleGenerator(c);
+	}
 	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
-	pS->addForceGenerator(new LocatedGravity(Vector3(0.0, 100.0, 0.0), Vector3(40.0, 0.3, 0.6), Vector3(0.0, -5.0, -0.6)));
-	explosion = new ExplosionGenerator(Vector3(35.0, 0.0, 0.0), 10.0, 1000.0, 0.2);
+	ballSystem->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
+
+	pS->addForceGenerator(new LocatedGravity(Vector3(0.0, 100.0, 0.0), Vector3(40.0, 0.3, 1.2), Vector3(0.0, -5.0, -1.2)));
+	ballSystem->addForceGenerator(new LocatedGravity(Vector3(0.0, 100.0, 0.0), Vector3(40.0, 0.3, 1.2), Vector3(0.0, -5.0, -1.2)));
+
+	explosion = new ExplosionGenerator(Vector3(28.0, 0.0, 0.0), 10.0, 50000.0, 0.5);
 	pS->addForceGenerator(explosion);
-	
-	shape->release();
+	ballSystem->addForceGenerator(explosion);
+	gun = new Gun();
 	sphere->release();
+	plane->release();
 }
 
 void
 GameScene::update(double t) {
 	pS->update(t);
+	ballSystem->update(t);
+	gun->integrate(t);
 }
 
 void
@@ -236,10 +264,28 @@ GameScene::keyPress(unsigned char key, const PxTransform& camera) {
 	switch (toupper(key)) {
 	case'P': {
 		generatePins();
+		explosion->setTimer(10.0);
 		break;
 	}
 	case'E': {
-		explosion->restartTimer();
+		explosion->setTimer(0.0);
+		break;
+	}
+	case ' ': {
+		balls->setParticleSource(camera.p);
+		balls->setVelocity(-camera.q.getBasisVector2().getNormalized() * balls->getVelocity().magnitude());
+		ballSystem->generateParticle();
+		break;
+	}
+	case'C': {
+		for (auto c : confetti) c->setGenerate(!c->getGenerate());
+		break;
+	}
+	case 'B': {
+		gun->setDir(-camera.q.getBasisVector2());
+		gun->setPos(camera.p);
+		gun->setType(GunBullet);
+		gun->shoot();
 		break;
 	}
 	default:

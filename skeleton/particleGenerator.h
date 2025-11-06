@@ -19,6 +19,7 @@ protected:
 	Vector4 _color;
 	double _lifeTime, _lifeDistance, _mass, _dumping, _genProb;
 	int _partsPerFrame;
+	bool _generate;
 
 public:
 	ParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, int partsPerFrame, double genProb);
@@ -29,10 +30,14 @@ public:
 	inline void setVelocity(Vector3 vel) { _velocity = vel; }
 	inline void setLifeTime(double lifeT) { _lifeTime = lifeT; }
 	inline void setGenProb(double genProb) { _genProb = genProb; }
+	inline void setGenerate(bool generate) { _generate = generate; }
 
-	inline Vector3 setParticleSource() { return _particleSource; }
-	inline Vector3 setVelocity() { return _velocity; }
-	inline double setLifeTime() { return _lifeTime; }
-	inline double setGenProb() { return _genProb; }
+	inline Vector3 getParticleSource() { return _particleSource; }
+	inline Vector3 getVelocity() { return _velocity; }
+	inline double getLifeTime() { return _lifeTime; }
+	inline double getGenProb() { return _genProb; }
+	inline bool getGenerate() { return _generate; }
+
+	
 };
 

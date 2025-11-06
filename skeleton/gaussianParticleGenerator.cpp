@@ -10,7 +10,7 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 particleSource, Vec
 std::vector<ParticleDT>
 GaussianParticleGenerator::generateParticle() {
 	std::vector<ParticleDT> particles(0);
-	for (int i = 0; i < _partsPerFrame; i++) {
+	for (int i = 0; i < _partsPerFrame && _generate; i++) {
 		if (abs(_u(_mt)) > _genProb) continue;
 		ParticleDT particle;
 		particle.lifeDistance = _lifeDistance + _u(_mt) * _lifeDistanceVar;

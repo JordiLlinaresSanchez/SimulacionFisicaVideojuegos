@@ -4,8 +4,10 @@
 class RenderItem;
 class Gun;
 class ParticleSystem;
+class ParticleGenerator;
 class ForceGenerator;
 class Pin;
+class SpecialParticleSystem;
 
 class Scene0 : public Scene {
 
@@ -67,8 +69,13 @@ class GameScene : public Scene {
 private:
 	std::vector<RenderItem*> RI;
 	std::vector<Pin*> pins;
+	std::vector<ParticleGenerator*> confetti;
 	ParticleSystem* pS;
+	SpecialParticleSystem* ballSystem;
 	ForceGenerator* explosion;
+	ParticleGenerator* balls;
+	Gun* gun;
+	
 
 	void generatePins();
 

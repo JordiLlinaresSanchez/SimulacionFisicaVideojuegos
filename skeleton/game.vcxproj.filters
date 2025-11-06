@@ -72,7 +72,15 @@
     <ClCompile Include="pin.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="locatedGravity.cpp" />
+    <ClCompile Include="locatedGravity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="ballLauncher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="specialParticleSystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -138,6 +146,14 @@
     <ClInclude Include="pin.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="locatedGravity.h" />
+    <ClInclude Include="locatedGravity.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ballLauncher.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="specialParticleSystem.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

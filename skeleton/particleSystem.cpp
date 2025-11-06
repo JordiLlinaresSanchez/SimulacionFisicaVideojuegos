@@ -23,7 +23,7 @@ ParticleSystem::addForceGenerator(ForceGenerator* fg) {
 }
 
 void 
-ParticleSystem::generateParticles(Particle* part, Vector3 origin, double lifeDistance, double lifeTime) {
+ParticleSystem::addParticle(Particle* part, Vector3 origin, double lifeDistance, double lifeTime) {
 	ParticleDT newPart;
 	newPart.lifeDistance = lifeDistance;
 	newPart.lifeTime = lifeTime;
@@ -33,7 +33,7 @@ ParticleSystem::generateParticles(Particle* part, Vector3 origin, double lifeDis
 }
 
 void
-ParticleSystem::generateParticles(ParticleDT part) {
+ParticleSystem::addParticle(ParticleDT part) {
 	_particles.push_back(part);
 }
 
