@@ -237,6 +237,7 @@ GameScene::initPhysics(bool interactive) {
 
 	for (auto c : confetti) {
 		pS->addParticleGenerator(c);
+		c->setGenerate(false);
 	}
 	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
 	ballSystem->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
@@ -279,13 +280,6 @@ GameScene::keyPress(unsigned char key, const PxTransform& camera) {
 	}
 	case'C': {
 		for (auto c : confetti) c->setGenerate(!c->getGenerate());
-		break;
-	}
-	case 'B': {
-		gun->setDir(-camera.q.getBasisVector2());
-		gun->setPos(camera.p);
-		gun->setType(GunBullet);
-		gun->shoot();
 		break;
 	}
 	default:

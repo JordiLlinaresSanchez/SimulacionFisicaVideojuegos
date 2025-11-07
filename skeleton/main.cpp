@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-//#include "checkML.h"
-
 #include "particle.h"
 #include "projectile.h"
 #include "gun.h"
