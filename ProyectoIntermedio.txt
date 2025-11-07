@@ -1,0 +1,23 @@
+El juego pretende ser una partida de bolos
+Ejecución:
+W y S: mueve la cámara hacia arriba y abajo
+A y D: rota la cámara hacia la izquierda y derecha
+Z y X: mueven la cámara hacia adelante y atrás
+P: coloca los bolos
+E: hace una explosión que tira los bolos
+Barra espaciadora: lanza la bola de bolos
+C: lanza confeti
+
+Requisito A.1) →"particle.cpp" l 25-30
+Requisito A.2) →"particle.cpp" l 7 "scenes.cpp" l 205 y 224
+Requisito A.3) →"particleSystem.cpp" l 58
+
+Requisito B) →"projecticle.cpp" l 10-30
+
+Requisito C) →"particleSystem.cpp" l 41-85
+
+Requisitos D.1 y 2) →"gaussianParticleGenerator.cpp" y "uniformParticleGenerator.cpp" l 4-28
+Requisito D.3) →"scenes.cpp" l 224-235 282
+
+Requisitos E.1, 2 y 3) →"particleSystem.cpp" l 52-58
+Requisito E.4) →"hurricaneGenerator.cpp" y "explosionGenerator.cpp" l 9 
