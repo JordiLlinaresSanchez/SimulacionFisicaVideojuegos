@@ -1,9 +1,9 @@
 #include "gaussianParticleGenerator.h"
 #include "particle.h"
 
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, 
-	double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, int partsPerFrame, double genProb, Vector3 sourceVar,
-	Vector3 velVar, double lifeVar, double distanceVar, double massVar , Vector4 colorVar) : _velocityVar(velVar), _particleSourceVar(sourceVar), 
+GaussianParticleGenerator::GaussianParticleGenerator(const Vector3& particleSource, const Vector3& vel, const Vector3& accel, physx::PxShape* shape, 
+	double lifeTime, double lifeDistance, double mass, double dumping, const Vector4& color, int partsPerFrame, double genProb, const Vector3& sourceVar,
+	const Vector3& velVar, double lifeVar, double distanceVar, double massVar , const Vector4& colorVar) : _velocityVar(velVar), _particleSourceVar(sourceVar), 
 	_lifeTimeVar(lifeVar), _lifeDistanceVar(distanceVar), _massVar(massVar), _colorVar(colorVar),
 	ParticleGenerator(particleSource, vel, accel, shape, lifeTime, lifeDistance, mass, dumping, color, partsPerFrame, genProb) {}
 

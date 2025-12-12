@@ -15,6 +15,7 @@ Pin::Pin(PxTransform& pos, Vector3 vel, Vector3 accel, double mass, double dumpi
 }
 
 Pin::~Pin() {
+	_head->shape->release();
 	DeregisterRenderItem(_head);
 	delete _head;
 	delete _headPose;

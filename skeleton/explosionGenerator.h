@@ -10,7 +10,7 @@ public:
 	ExplosionGenerator(Vector3 pos, double radius, double intensity, double tau);
 
 	void update(double t) override;
-	bool checkCondition(const Particle* particle) override;
+	bool checkCondition(Particle* particle) override;
 	virtual Vector3 applyForce(Particle* particle) override;
 };
 

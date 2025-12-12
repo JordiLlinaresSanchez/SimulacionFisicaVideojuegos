@@ -38,7 +38,7 @@ namespace Snippets
 class Camera
 {
 public:
-	Camera(const physx::PxVec3 &eye, const physx::PxVec3& dir);
+	Camera(const physx::PxVec3 &eye, const physx::PxVec3& dir, const physx::PxVec3& targetPoint = physx::PxVec3(0.0));
 
 	void				handleMouse(int button, int state, int x, int y);
 	bool				handleKey(unsigned char key, int x, int y, float speed = 1.0f);
@@ -49,6 +49,7 @@ public:
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
 private:
+	physx::PxVec3	mTargetPoint;
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;
 	int				mMouseX;

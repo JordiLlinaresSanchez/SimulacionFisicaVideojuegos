@@ -27,6 +27,7 @@
 #include "locatedGravity.h"
 #include "specialParticleSystem.h"
 #include "ballLauncher.h"
+#include "anchoredSpringFG.h"
 
 
 using namespace physx;
@@ -93,7 +94,10 @@ Scene0::keyPress(unsigned char key, const PxTransform& camera) {
 Scene1::Scene1() :RI(std::vector<RenderItem*>(0)), pS(NULL), explosion(NULL) {}
 
 Scene1::~Scene1() {
-	for (auto ri : RI) delete ri;
+	for (auto ri : RI) {
+		ri->shape->release();
+		delete ri;
+	}
 	delete pS;
 	delete explosion;
 }
@@ -119,9 +123,6 @@ Scene1::initPhysics(bool interactive) {
 
 	explosion = new ExplosionGenerator(Vector3(0.0, 10.0, 0.0), 20.0, 10000.0, 0.3);
 	pS->addForceGenerator(explosion);
-
-	shape->release();
-	sphere->release();
 }
 
 void
@@ -143,7 +144,10 @@ Scene1::keyPress(unsigned char key, const PxTransform& camera) {
 Scene2::Scene2() :RI(std::vector<RenderItem*>(0)), pS(NULL) {}
 
 Scene2::~Scene2() {
-	for (auto ri : RI) delete ri;
+	for (auto ri : RI) {
+		ri->shape->release();
+		delete ri;
+	}
 	delete pS;
 }
 
@@ -166,8 +170,6 @@ Scene2::initPhysics(bool interactive) {
 	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
 	pS->addForceGenerator(new HurricaneGenerator(2, 100, 1.0, Vector3(0.0), 170.0));
 
-	shape->release();
-	sphere->release();
 }
 
 void
@@ -187,7 +189,10 @@ Scene2::keyPress(unsigned char key, const PxTransform& camera) {
 GameScene::GameScene() :RI(std::vector<RenderItem*>(0)), pS(NULL), ballSystem(NULL) {}
 
 GameScene::~GameScene() {
-	for (auto ri : RI) delete ri;
+	for (auto ri : RI) {
+		ri->shape->release();
+		delete ri;
+	}
 	delete pS;
 	delete explosion;
 	delete ballSystem;
@@ -249,7 +254,6 @@ GameScene::initPhysics(bool interactive) {
 	pS->addForceGenerator(explosion);
 	ballSystem->addForceGenerator(explosion);
 	gun = new Gun();
-	sphere->release();
 	plane->release();
 }
 
@@ -268,7 +272,7 @@ GameScene::keyPress(unsigned char key, const PxTransform& camera) {
 		explosion->setTimer(10.0);
 		break;
 	}
-	case'E': {
+	case'L': {
 		explosion->setTimer(0.0);
 		break;
 	}
@@ -282,6 +286,48 @@ GameScene::keyPress(unsigned char key, const PxTransform& camera) {
 		for (auto c : confetti) c->setGenerate(!c->getGenerate());
 		break;
 	}
+	default:
+		break;
+	}
+}
+
+Scene3::Scene3() :RI(std::vector<RenderItem*>(0)), pS(NULL) {}
+
+Scene3::~Scene3() {
+	for (auto ri : RI) {
+		ri->shape->release();
+		delete ri;
+	}
+	delete pS;
+}
+
+void
+Scene3::initPhysics(bool interactive) {
+	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
+	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
+	PxShape* box = CreateShape(PxBoxGeometry(1.0, 1.0, 1.0));
+
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
+
+	pS = new ParticleSystem();
+	Particle* part0 = new Particle(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(0.55, 0.3, 0.15, 1.0));
+	pS->addParticle(part0, Vector3(0.0, 0.0, 0.0), 10.0);
+	AnchoredSpringFG* spring = new AnchoredSpringFG(5.0, 3.0, Vector3(0.0), box);
+	spring->atachToRoot(part0);
+	pS->addForceGenerator(spring);
+}
+
+void
+Scene3::update(double t) {
+	pS->update(t);
+}
+
+void
+Scene3::keyPress(unsigned char key, const PxTransform& camera) {
+	switch (toupper(key)) {
+
 	default:
 		break;
 	}

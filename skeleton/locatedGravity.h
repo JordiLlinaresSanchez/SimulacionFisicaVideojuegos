@@ -7,6 +7,6 @@ private:
 public:
 	LocatedGravity(Vector3 force, Vector3 initPos, Vector3 endPos);
 
-	bool checkCondition(const Particle* particle) override;
+	bool checkCondition(Particle* particle) override;
 };
 

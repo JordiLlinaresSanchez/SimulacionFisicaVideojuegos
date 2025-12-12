@@ -38,10 +38,11 @@ using namespace physx;
 namespace Snippets
 {
 
-Camera::Camera(const PxVec3& eye, const PxVec3& dir)
+Camera::Camera(const PxVec3& eye, const PxVec3& dir, const physx::PxVec3& targetPoint)
 {
 	mEye = eye;
 	mDir = dir.getNormalized();
+	mTargetPoint = targetPoint;
 	mMouseX = 0;
 	mMouseY = 0;
 }
@@ -59,23 +60,50 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 	PX_UNUSED(x);
 	PX_UNUSED(y);
 
-	PxVec3 viewZ = mDir.cross(PxVec3(0,0,1)).getNormalized();
+	PxVec3 viewZ = mDir.cross(PxVec3(0, 0, 1)).getNormalized();
+	PxVec3 viewY = mDir.cross(PxVec3(0, 1, 0)).getNormalized();
 	switch(toupper(key))
 	{
-	case 'Z':	mEye += mDir*0.2f*speed;		break;
-	case 'X':	mEye -= mDir*0.2f*speed;		break;
-	case 'W':	mEye -= viewZ * 0.05f * speed;		break;
-	case 'S':	mEye += viewZ * 0.05f * speed;		break;
+	case 'Z':	mEye += mDir * 0.5f * speed;		break;
+	case 'X':	mEye -= mDir * 0.5f * speed;		break;
+	case 'W': {
+		mEye -= viewZ * 0.5f * speed;
+		mTargetPoint -= viewZ * 0.5f * speed;
+		break; 
+	}
+	case 'S': {	
+		mEye += viewZ * 0.5f * speed;
+		mTargetPoint += viewZ * 0.5f * speed;
+		break; 
+	}
 	case 'A': {
-		//mEye -= viewY * 0.5f * speed;
-		PxQuat qx(PxPi * 0.01f, PxVec3(0, 1, 0));
-		mDir = qx.rotate(mDir);
+		mEye -= viewY * 0.5f * speed;
+		mTargetPoint -= viewY * 0.5f * speed;
+		/*PxQuat qx(PxPi * 0.01f, PxVec3(0, 1, 0));
+		mDir = qx.rotate(mDir);*/
 		break;
 	}
 	case 'D': {
-		//mEye += viewY * 0.5f * speed;
-		PxQuat qx(PxPi * -0.01f, PxVec3(0, 1, 0));
-		mDir = qx.rotate(mDir);
+		mEye += viewY * 0.5f * speed;
+		mTargetPoint += viewY * 0.5f * speed;
+		/*PxQuat qx(PxPi * -0.01f, PxVec3(0, 1, 0));
+		mDir = qx.rotate(mDir);*/
+		break;
+	}
+	case 'Q': {
+		auto pos = mTargetPoint - mEye;
+		mEye -= (viewY * cos(PxPi * 0.01) + mDir * sin(PxPi * 0.01)) * 0.07f * speed * pos.magnitude();
+		mEye += mDir * 0.00469 * speed * pos.magnitude();
+		pos = mTargetPoint - mEye;
+		mDir = pos.getNormalized();
+		break;
+	}
+	case 'E': {
+		auto pos = mTargetPoint - mEye;
+		mEye += (viewY * cos(PxPi * 0.01) + mDir * sin(PxPi * 0.01)) * 0.07f * speed * pos.magnitude();
+		mEye += mDir * 0.00015 * speed * pos.magnitude();
+		pos = mTargetPoint - mEye;
+		mDir = pos.getNormalized();
 		break;
 	}
 	default:							return false;
@@ -92,7 +120,8 @@ void Camera::handleAnalogMove(float x, float y)
 
 void Camera::handleMotion(int x, int y)
 {
-	/*int dx = mMouseX - x;
+	//comentar
+	int dx = mMouseX - x;
 	int dy = mMouseY - y;
 
 	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
@@ -105,7 +134,7 @@ void Camera::handleMotion(int x, int y)
 	mDir.normalize();
 
 	mMouseX = x;
-	mMouseY = y;*/
+	mMouseY = y;
 }
 
 PxTransform Camera::getTransform() const

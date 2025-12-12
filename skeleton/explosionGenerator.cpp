@@ -11,7 +11,7 @@ ExplosionGenerator::update(double t) {
 }
 
 bool 
-ExplosionGenerator::checkCondition(const Particle* particle) {
+ExplosionGenerator::checkCondition(Particle* particle) {
 	return (particle->getPos() - _initPos).magnitude() <= _radius;
 }
 

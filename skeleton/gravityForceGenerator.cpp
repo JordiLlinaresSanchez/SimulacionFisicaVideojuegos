@@ -7,7 +7,7 @@ void
 GravityForceGenerator::update(double t){}
 
 bool
-GravityForceGenerator::checkCondition(const Particle* p){
+GravityForceGenerator::checkCondition(Particle* p){
 	return true;
 }
 

@@ -22,7 +22,7 @@ protected:
 	bool _generate;
 
 public:
-	ParticleGenerator(Vector3 particleSource, Vector3 vel, Vector3 accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping, Vector4 color, int partsPerFrame, double genProb);
+	ParticleGenerator(const Vector3& particleSource, const Vector3& vel, const Vector3& accel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass, double dumping, const Vector4& color, int partsPerFrame, double genProb);
 	~ParticleGenerator();
 	virtual std::vector<ParticleDT> generateParticle()=0;
 
