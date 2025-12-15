@@ -41,6 +41,8 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scenes.cpp" />
+    <ClCompile Include="solidGenerator.cpp" />
+    <ClCompile Include="solidSystem.cpp" />
     <ClCompile Include="specialParticleSystem.cpp" />
     <ClCompile Include="springForceGenerator.cpp" />
     <ClCompile Include="twoWaysSpringFG.cpp" />
@@ -71,6 +73,8 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scenes.h" />
+    <ClInclude Include="solidGenerator.h" />
+    <ClInclude Include="solidSystem.h" />
     <ClInclude Include="specialParticleSystem.h" />
     <ClInclude Include="springForceGenerator.h" />
     <ClInclude Include="twoWaysSpringFG.h" />

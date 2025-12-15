@@ -90,7 +90,13 @@
     <ClCompile Include="twoWaysSpringFG.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="floatationFG.cpp" />
+    <ClCompile Include="floatationFG.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="solidSystem.cpp" />
+    <ClCompile Include="solidGenerator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -174,6 +180,12 @@
     <ClInclude Include="twoWaysSpringFG.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="floatationFG.h" />
+    <ClInclude Include="floatationFG.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="solidSystem.h" />
+    <ClInclude Include="solidGenerator.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

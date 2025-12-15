@@ -10,17 +10,6 @@
 
 #include <iostream>
 
-#include "particle.h"
-#include "projectile.h"
-#include "gun.h"
-#include "gaussianParticleGenerator.h"
-#include "uniformParticleGenerator.h"
-#include "particleSystem.h"
-#include "forceGenerator.h"
-#include "gravityForceGenerator.h"
-#include "windGenerator.h"
-#include "hurricaneGenerator.h"
-#include "explosionGenerator.h"
 #include "Scene.h"
 #include "Scenes.h"
 
@@ -76,7 +65,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	actScene = new Scene4();
+	actScene = new Scene5(gPhysics, gScene);
 	actScene->initPhysics(interactive);
 }
 

@@ -9,9 +9,7 @@ class ParticleSystem
 {
 	
 protected:
-
-	Vector3 _particleSource;
-	std::vector<ParticleDT> _particles;
+	std::vector<ParticleDT> _solids;
 	std::vector<ParticleGenerator*> _particleGenerators;
 	std::vector<ForceGenerator*> _forceGenerators;
 

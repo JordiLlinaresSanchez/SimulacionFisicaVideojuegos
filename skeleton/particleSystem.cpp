@@ -1,14 +1,13 @@
 #include "particleSystem.h"
 #include "particle.h"
 #include "forceGenerator.h"
-#include "iostream"
 
 ParticleSystem::ParticleSystem(std::vector<ParticleGenerator*> particleGenerators, std::vector<ParticleDT> particles, std::vector<ForceGenerator*> forces) :
-							   _particles(particles), _particleGenerators(particleGenerators), _forceGenerators(forces) {}
+							   _solids(particles), _particleGenerators(particleGenerators), _forceGenerators(forces) {}
 
 ParticleSystem::~ParticleSystem() {
 	for (ParticleGenerator* pg : _particleGenerators) delete pg;
-	for (ParticleDT& p : _particles) delete p.particle;
+	for (ParticleDT& p : _solids) delete p.particle;
 	for (ForceGenerator* fg : _forceGenerators) delete fg;
 }
 
@@ -29,12 +28,12 @@ ParticleSystem::addParticle(Particle* part, Vector3 origin, double lifeDistance,
 	newPart.lifeTime = lifeTime;
 	newPart.origin = origin;
 	newPart.particle = part;
-	_particles.push_back(newPart);
+	_solids.push_back(newPart);
 }
 
 void
 ParticleSystem::addParticle(ParticleDT part) {
-	_particles.push_back(part);
+	_solids.push_back(part);
 }
 
 void
@@ -47,7 +46,7 @@ ParticleSystem::update(double t) {
 
 void 
 ParticleSystem::integrateParticles(double t) {
-	for (ParticleDT& part : _particles) {
+	for (ParticleDT& part : _solids) {
 		Vector3 force(0);
 		for (ForceGenerator* fg : _forceGenerators) {
 			if (fg->checkCondition(part.particle)) {
@@ -64,21 +63,21 @@ void
 ParticleSystem::generateParticle() {
 	for (int i = 0; i < _particleGenerators.size(); i++) {
 		auto parts = _particleGenerators[i]->generateParticle();
-		for (ParticleDT& part : parts) _particles.push_back(part);
+		for (ParticleDT& part : parts) _solids.push_back(part);
 	}
 }
 
 void 
 ParticleSystem::deleteParticles(double t) {
-	for (int i = _particles.size() - 1; i >= 0; --i) {
-		_particles[i].lifeTime -= t;
-		if (_particles[i].lifeDistance < (_particles[i].particle->getPos() - _particles[i].origin).magnitude() || _particles[i].lifeTime<0) {
-			auto temp = _particles[i];
-			_particles[i] = _particles[_particles.size() - 1];
-			_particles[_particles.size() - 1] = temp;
-			auto a = _particles[i];
-			auto p = --_particles.end();
-			_particles.pop_back();
+	for (int i = _solids.size() - 1; i >= 0; --i) {
+		_solids[i].lifeTime -= t;
+		if (_solids[i].lifeDistance < (_solids[i].particle->getPos() - _solids[i].origin).magnitude() || _solids[i].lifeTime<0) {
+			auto temp = _solids[i];
+			_solids[i] = _solids[_solids.size() - 1];
+			_solids[_solids.size() - 1] = temp;
+			auto a = _solids[i];
+			auto p = --_solids.end();
+			_solids.pop_back();
 			delete p._Ptr->particle;
 		}
 	}

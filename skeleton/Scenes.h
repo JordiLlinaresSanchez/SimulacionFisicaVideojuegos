@@ -9,6 +9,10 @@ class ForceGenerator;
 class Pin;
 class SpecialParticleSystem;
 class FloatationFG;
+namespace physx{
+	class PxPhysics;
+	class PxScene;
+}
 
 class Scene0 : public Scene {
 
@@ -121,6 +125,25 @@ private:
 public:
 	Scene4();
 	~Scene4();
+
+	void initPhysics(bool interactive) override;
+
+	void update(double t)override;
+
+	void keyPress(unsigned char key, const physx::PxTransform& camera)override;
+
+};
+
+class Scene5 : public Scene {
+
+private:
+	std::vector<RenderItem*> RI;
+	ParticleSystem* pS;
+	physx::PxPhysics* gPhysics = NULL;
+	physx::PxScene* gScene = NULL;
+public:
+	Scene5(physx::PxPhysics* physics, physx::PxScene* scene);
+	~Scene5();
 
 	void initPhysics(bool interactive) override;
 
