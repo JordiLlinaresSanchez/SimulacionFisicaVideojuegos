@@ -18,15 +18,21 @@ SpringForceGenerator::checkCondition(Particle* particle){
 
 Vector3 
 SpringForceGenerator::applyForce(Particle* particle){
-	Vector3 relativePos = _atached[particle]->getPos() - particle->getPos();
+	Vector3 force = Vector3(0.0);
+	for (auto part : _atached[particle]) {
+		Vector3 relativePos = part->getPos() - particle->getPos();
 
-	double lenght = relativePos.normalize();
-	double deltaX = lenght - _restingLength;
+		double lenght = relativePos.normalize();
+		double deltaX = lenght - _restingLength;
 
-	return relativePos * deltaX * _k;
+		force += relativePos * deltaX * _k;
+	}
+	
+
+	return force;
 }
 
 void 
-SpringForceGenerator::asignParticles(Particle* up, Particle* down) {
-	_atached[down] = up;
+SpringForceGenerator::asignParticles(Particle* part, Particle* root) {
+	_atached[part].push_back(root);
 }

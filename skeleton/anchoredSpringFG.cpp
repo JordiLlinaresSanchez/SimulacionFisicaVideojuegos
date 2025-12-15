@@ -9,5 +9,5 @@ AnchoredSpringFG::AnchoredSpringFG(double k, double restingLength, Vector3 pos, 
 
 void 
 AnchoredSpringFG::atachToRoot(Particle* part) {
-	_atached[part] = _square;
+	_atached[part].push_back(_square);
 }

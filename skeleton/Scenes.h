@@ -109,3 +109,21 @@ public:
 	void keyPress(unsigned char key, const physx::PxTransform& camera)override;
 
 };
+
+class Scene4 : public Scene {
+
+private:
+	std::vector<RenderItem*> RI;
+	ParticleSystem* pS;
+
+public:
+	Scene4();
+	~Scene4();
+
+	void initPhysics(bool interactive) override;
+
+	void update(double t)override;
+
+	void keyPress(unsigned char key, const physx::PxTransform& camera)override;
+
+};

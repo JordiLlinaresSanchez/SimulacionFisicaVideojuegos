@@ -23,6 +23,7 @@
     <ClCompile Include="ballLauncher.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="explosionGenerator.cpp" />
+    <ClCompile Include="flotationFG.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
     <ClCompile Include="gaussianParticleGenerator.cpp" />
     <ClCompile Include="gravityForceGenerator.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="specialParticleSystem.cpp" />
     <ClCompile Include="springForceGenerator.cpp" />
+    <ClCompile Include="twoWaysSpringFG.cpp" />
     <ClCompile Include="uniformParticleGenerator.cpp" />
     <ClCompile Include="windGenerator.cpp" />
   </ItemGroup>
@@ -52,6 +54,7 @@
     <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="explosionGenerator.h" />
+    <ClInclude Include="flotationFG.h" />
     <ClInclude Include="forceGenerator.h" />
     <ClInclude Include="gaussianParticleGenerator.h" />
     <ClInclude Include="gravityForceGenerator.h" />
@@ -70,6 +73,7 @@
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="specialParticleSystem.h" />
     <ClInclude Include="springForceGenerator.h" />
+    <ClInclude Include="twoWaysSpringFG.h" />
     <ClInclude Include="uniformParticleGenerator.h" />
     <ClInclude Include="windGenerator.h" />
   </ItemGroup>

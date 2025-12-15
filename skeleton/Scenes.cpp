@@ -28,6 +28,8 @@
 #include "specialParticleSystem.h"
 #include "ballLauncher.h"
 #include "anchoredSpringFG.h"
+#include "twoWaysSpringFG.h"
+#include "flotationFG.h"
 
 
 using namespace physx;
@@ -312,11 +314,34 @@ Scene3::initPhysics(bool interactive) {
 	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
 
 	pS = new ParticleSystem();
-	Particle* part0 = new Particle(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(0.55, 0.3, 0.15, 1.0));
-	pS->addParticle(part0, Vector3(0.0, 0.0, 0.0), 10.0);
-	AnchoredSpringFG* spring = new AnchoredSpringFG(5.0, 3.0, Vector3(0.0), box);
-	spring->atachToRoot(part0);
+	Particle* red = new Particle(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(1.0, 0.0, 0.0, 1.0));
+	Particle* orange = new Particle(Vector3(0.0, 0.0, 0.5), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(1.0, 0.5, 0.0, 1.0));
+	Particle* yellow = new Particle(Vector3(0.0, 0.0, 1.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(1.0, 1.0, 0.0, 1.0));
+	Particle* green = new Particle(Vector3(0.0, 0.0, 1.5), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(0.0, 1.0, 0.0, 1.0));
+	Particle* blue = new Particle(Vector3(0.0, 0.0, 2.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(0.0, 0.0, 1.0, 1.0));
+	Particle* purple = new Particle(Vector3(0.0, 0.0, 2.5), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(0.5, 0.0, 1.0, 1.0));
+
+
+	pS->addParticle(red, Vector3(0.0, 0.0, 0.0), 100.0);
+	pS->addParticle(orange, Vector3(0.0, 0.0, 0.2), 100.0);
+	pS->addParticle(yellow, Vector3(0.0, 0.0, 0.4), 100.0);
+	pS->addParticle(green, Vector3(0.0, 0.0, 0.6), 100.0);
+	pS->addParticle(blue, Vector3(0.0, 0.0, 0.8), 100.0);
+	pS->addParticle(purple, Vector3(0.0, 0.0, 1.0), 100.0);
+
+	AnchoredSpringFG* anchoredSpring = new AnchoredSpringFG(5.0, 3.0, Vector3(0.0), box);
+	TwoWaysSpringFG* spring = new TwoWaysSpringFG(5.0, 3.0);
+	
+	anchoredSpring->atachToRoot(red);
+	spring->asignParticles(orange, red);
+	spring->asignParticles(orange, yellow);
+	spring->asignParticles(yellow, green);
+	spring->asignParticles(green, blue);
+	spring->asignParticles(blue, purple);
+
+	pS->addForceGenerator(anchoredSpring);
 	pS->addForceGenerator(spring);
+	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
 }
 
 void
@@ -326,6 +351,50 @@ Scene3::update(double t) {
 
 void
 Scene3::keyPress(unsigned char key, const PxTransform& camera) {
+	switch (toupper(key)) {
+
+	default:
+		break;
+	}
+}
+
+Scene4::Scene4() :RI(std::vector<RenderItem*>(0)), pS(NULL) {}
+
+Scene4::~Scene4() {
+	for (auto ri : RI) {
+		ri->shape->release();
+		delete ri;
+	}
+	delete pS;
+}
+
+void
+Scene4::initPhysics(bool interactive) {
+	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
+	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
+	PxShape* box = CreateShape(PxBoxGeometry(15.0, 0.2, 15.0));
+
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(0.0, 10.0, 0.0), PxQuat(3.1416 / 2, Vector3(0.0, 0.0, 1.0))), Vector4(0.0, 1.0, 0.0, 1.0)));
+	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(0.0, 0.0, 10.0), PxQuat(3.1416 / 2, Vector3(0.0, 1.0, 0.0))), Vector4(0.0, 0.0, 1.0, 1.0)));
+
+	pS = new ParticleSystem();
+	Particle* liquid = new Particle(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, box, Vector4(0.0, 0.3, 1.0, 1.0));
+	Particle* particle = new Particle(Vector3(-3.0, 0.0, 1.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(1.0, 0.5, 0.0, 1.0));
+
+	pS->addParticle(particle, Vector3(0.0, 0.0, 0.0), 100.0);
+	
+	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
+	pS->addForceGenerator(new FlotationFG(liquid, 5.0, 1.0));
+}
+
+void
+Scene4::update(double t) {
+	pS->update(t);
+}
+
+void
+Scene4::keyPress(unsigned char key, const PxTransform& camera) {
 	switch (toupper(key)) {
 
 	default:
