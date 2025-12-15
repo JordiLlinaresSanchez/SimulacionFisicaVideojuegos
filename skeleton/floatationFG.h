@@ -1,7 +1,7 @@
 #pragma once
 #include "forceGenerator.h"
 #include "particle.h"
-class FlotationFG: public ForceGenerator
+class FloatationFG: public ForceGenerator
 {
 protected:
 	Particle* _waterTop;
@@ -10,11 +10,13 @@ protected:
 	double _volume;
 	const double GRAVITY = 9.8;
 public:
-	FlotationFG(Particle* water, double h, double v, double d = 1000);
-	~FlotationFG();
+	FloatationFG(Particle* water, double h, double v, double d = 1000);
+	~FloatationFG();
 
 	void update(double t) override;
 	bool checkCondition(Particle* particle) override;
 	Vector3 applyForce(Particle* particle) override;
+
+	inline void setDensity(double d) { _liquidDensity = d; }
 };
 

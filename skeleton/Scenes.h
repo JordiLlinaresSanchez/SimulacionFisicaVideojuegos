@@ -8,6 +8,7 @@ class ParticleGenerator;
 class ForceGenerator;
 class Pin;
 class SpecialParticleSystem;
+class FloatationFG;
 
 class Scene0 : public Scene {
 
@@ -115,6 +116,7 @@ class Scene4 : public Scene {
 private:
 	std::vector<RenderItem*> RI;
 	ParticleSystem* pS;
+	FloatationFG* floatationFG;
 
 public:
 	Scene4();

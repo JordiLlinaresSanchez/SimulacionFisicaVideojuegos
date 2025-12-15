@@ -23,7 +23,7 @@
     <ClCompile Include="ballLauncher.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="explosionGenerator.cpp" />
-    <ClCompile Include="flotationFG.cpp" />
+    <ClCompile Include="floatationFG.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
     <ClCompile Include="gaussianParticleGenerator.cpp" />
     <ClCompile Include="gravityForceGenerator.cpp" />
@@ -54,7 +54,7 @@
     <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="explosionGenerator.h" />
-    <ClInclude Include="flotationFG.h" />
+    <ClInclude Include="floatationFG.h" />
     <ClInclude Include="forceGenerator.h" />
     <ClInclude Include="gaussianParticleGenerator.h" />
     <ClInclude Include="gravityForceGenerator.h" />

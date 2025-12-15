@@ -29,7 +29,7 @@
 #include "ballLauncher.h"
 #include "anchoredSpringFG.h"
 #include "twoWaysSpringFG.h"
-#include "flotationFG.h"
+#include "floatationFG.h"
 
 
 using namespace physx;
@@ -371,7 +371,7 @@ Scene4::~Scene4() {
 void
 Scene4::initPhysics(bool interactive) {
 	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
-	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
+	PxShape* flotableObject = CreateShape(PxBoxGeometry(Vector3(1.0)));
 	PxShape* box = CreateShape(PxBoxGeometry(15.0, 0.2, 15.0));
 
 	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
@@ -380,12 +380,12 @@ Scene4::initPhysics(bool interactive) {
 
 	pS = new ParticleSystem();
 	Particle* liquid = new Particle(Vector3(0.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, box, Vector4(0.0, 0.3, 1.0, 1.0));
-	Particle* particle = new Particle(Vector3(-3.0, 0.0, 1.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, sphere, Vector4(1.0, 0.5, 0.0, 1.0));
+	Particle* particle = new Particle(Vector3(-5.0, 5.0, 5.0), Vector3(0.0, 0.0, 0.0), Vector3(0.0), 1.0, 0.9, flotableObject, Vector4(0.8, 0.5, 0.0, 1.0));
 
 	pS->addParticle(particle, Vector3(0.0, 0.0, 0.0), 100.0);
-	
+	floatationFG = new FloatationFG(liquid, 1.0, 6.0, 1000.0);
 	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
-	pS->addForceGenerator(new FlotationFG(liquid, 5.0, 1.0));
+	pS->addForceGenerator(floatationFG);
 }
 
 void
@@ -396,7 +396,30 @@ Scene4::update(double t) {
 void
 Scene4::keyPress(unsigned char key, const PxTransform& camera) {
 	switch (toupper(key)) {
-
+	case'1': {
+		floatationFG->setDensity(1000.0);
+		break;
+	}
+	case'2': {
+		floatationFG->setDensity(10.0);
+		break;
+	}
+	case'3': {
+		floatationFG->setDensity(1.0);
+		break;
+	}
+	case'4': {
+		floatationFG->setDensity(0.3);
+		break;
+	}
+	case'5': {
+		floatationFG->setDensity(0.16);
+		break;
+	}
+	case'6': {
+		floatationFG->setDensity(0.1);
+		break;
+	}
 	default:
 		break;
 	}
