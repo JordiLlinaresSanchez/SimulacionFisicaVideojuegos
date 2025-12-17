@@ -1,12 +1,19 @@
 #include "solidSystem.h"
 #include "forceGenerator.h"
+#include "RenderUtils.hpp"
+#include <iostream>
 
-SolidSystem::SolidSystem(std::vector<SolidGenerator*> solidGenerators, std::vector<SolidDT> solids/*, std::vector<ForceGenerator*> forces*/ ) :
-	_solids(solids), _solidGenerators(solidGenerators)/*, _forceGenerators(forces)*/ {}
+SolidSystem::SolidSystem(physx::PxScene* scene, physx::PxPhysics* physics) :
+	_solids(0, SolidDT()), _solidGenerators(0)/*, _forceGenerators(forces)*/, _gScene(scene), _gPhysics(physics) {}
 
 SolidSystem::~SolidSystem() {
 	for (SolidGenerator* sg : _solidGenerators) delete sg;
-	//for (SolidDT& s : _solids) delete s.solid;
+	
+	for (SolidDT& s : _solids) {
+		_gScene->removeActor(*s.solid);
+		s.ri->shape->release();
+		delete s.ri;
+	}
 	//for (ForceGenerator* fg : _forceGenerators) delete fg;
 }
 
@@ -21,25 +28,29 @@ SolidSystem::addSolidGenerator(SolidGenerator* solidGenerator) {
 //}
 
 void
-SolidSystem::addSolid(physx::PxRigidActor* solid, Vector3 origin, double lifeDistance, double lifeTime) {
+SolidSystem::addSolid(physx::PxRigidActor* solid, Vector3& origin, physx::PxShape* shape, Vector4 color, double lifeDistance, double lifeTime) {
 	SolidDT newSolid;
 	newSolid.lifeDistance = lifeDistance;
 	newSolid.lifeTime = lifeTime;
 	newSolid.origin = origin;
 	newSolid.solid = solid;
+	
+	solid = _gPhysics->createRigidDynamic(physx::PxTransform(origin));
+	solid->attachShape(*shape);
+	_gScene->addActor(*solid);
+
+	newSolid.ri = new RenderItem(shape, solid, color);
+	
 	_solids.push_back(newSolid);
 }
 
-void
-SolidSystem::addSolid(SolidDT solid) {
-	_solids.push_back(solid);
-}
 
 void
 SolidSystem::update(double t) {
 	//for (ForceGenerator* fg : _forceGenerators) fg->update(t);
 	//integrateParticles(t);
-	deleteSolids(t);
+	for (auto a : _solids) std::cout<< a.solid->getGlobalPose().p.y << '\n';
+	deleteSolid(t);
 	generateSolid();
 }
 
@@ -70,14 +81,15 @@ void
 SolidSystem::deleteSolid(double t) {
 	for (int i = _solids.size() - 1; i >= 0; --i) {
 		_solids[i].lifeTime -= t;
-		if (_solids[i].lifeDistance < (_particles[i].particle->getPos() - _particles[i].origin).magnitude() || _particles[i].lifeTime < 0) {
-			auto temp = _particles[i];
-			_particles[i] = _particles[_particles.size() - 1];
-			_particles[_particles.size() - 1] = temp;
-			auto a = _particles[i];
-			auto p = --_particles.end();
-			_particles.pop_back();
-			delete p._Ptr->particle;
+		if (_solids[i].lifeDistance < (_solids[i].solid->getGlobalPose().p - _solids[i].origin).magnitude() || _solids[i].lifeTime < 0) {
+			auto temp = _solids[i];
+			_solids[i] = _solids[_solids.size() - 1];
+			_solids[_solids.size() - 1] = temp;
+			auto a = _solids[i];
+			auto p = --_solids.end();
+			_solids.pop_back();
+			_gScene->removeActor(*p->solid);
+			p->solid = NULL;
 		}
 	}
 }

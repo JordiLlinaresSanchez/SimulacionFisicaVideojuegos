@@ -93,10 +93,13 @@
     <ClCompile Include="floatationFG.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="solidSystem.cpp" />
     <ClCompile Include="solidGenerator.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="solidSystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="gaussianSG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -183,9 +186,12 @@
     <ClInclude Include="floatationFG.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="solidSystem.h" />
     <ClInclude Include="solidGenerator.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="solidSystem.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gaussianSG.h" />
   </ItemGroup>
 </Project>

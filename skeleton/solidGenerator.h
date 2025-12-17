@@ -1,9 +1,11 @@
 #pragma once
 #include "PxPhysicsAPI.h"
 #include "core.hpp"
+#include "RenderUtils.hpp"
 
 struct SolidDT {
 	physx::PxRigidActor* solid;
+	RenderItem* ri;
 	Vector3 origin;
 	double lifeDistance;
 	double lifeTime;
@@ -22,7 +24,7 @@ protected:
 public:
 	SolidGenerator(const Vector3& source, const Vector3& vel, physx::PxShape* shape, double lifeTime, double lifeDistance, double mass = 1.0, double genProb = 1.0, const Vector4& color = Vector4(1.0), int partsPerFrame = 1);
 	~SolidGenerator();
-	virtual std::vector<SolidDT> generate() = 0;
+	virtual std::vector<SolidDT> generate(physx::PxScene* scene) = 0;
 
 	void setSource(Vector3 source);
 	void setVelocity(Vector3 vel);

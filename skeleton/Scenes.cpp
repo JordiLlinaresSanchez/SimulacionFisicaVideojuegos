@@ -30,6 +30,7 @@
 #include "anchoredSpringFG.h"
 #include "twoWaysSpringFG.h"
 #include "floatationFG.h"
+#include "solidSystem.h"
 
 
 using namespace physx;
@@ -426,20 +427,20 @@ Scene4::keyPress(unsigned char key, const PxTransform& camera) {
 	}
 }
 
-Scene5::Scene5(PxPhysics* physics, PxScene* scene) :RI(std::vector<RenderItem*>(0)), pS(NULL), gPhysics(physics), gScene(scene) {}
+Scene5::Scene5(PxPhysics* physics, PxScene* scene) :RI(std::vector<RenderItem*>(0)), sS(NULL), gPhysics(physics), gScene(scene) {}
 
 Scene5::~Scene5() {
 	for (auto ri : RI) {
 		ri->shape->release();
 		delete ri;
 	}
-	delete pS;
+	delete sS;
 }
 
 void
 Scene5::initPhysics(bool interactive) {
 	PxShape* shape = CreateShape(PxCapsuleGeometry(1.0, 10.0));
-	/*PxShape* sphere = CreateShape(PxSphereGeometry(1.0));*/
+	PxShape* sphere = CreateShape(PxSphereGeometry(1.0));
 	PxShape* floor = CreateShape(PxBoxGeometry(15.0, 0.2, 15.0));
 
 	RI.push_back(new RenderItem(shape, new PxTransform(Vector3(10.0, 0.0, 0.0), PxQuat(3.1416 / 2, Vector3(1.0, 0.0, 0.0))), Vector4(1.0, 0.0, 0.0, 1.0)));
@@ -451,14 +452,16 @@ Scene5::initPhysics(bool interactive) {
 	gScene->addActor(*floorRB);
 
 	RI.push_back(new RenderItem(floor, floorRB, Vector4(1.0)));
-	//pS = new ParticleSystem();
+	sS = new SolidSystem(gScene, gPhysics);
+	
+	sS->addSolid(gPhysics->createRigidDynamic(PxTransform(Vector3(10.0, 10.0, 10.0))), Vector3(10.0, 10.0, 10.0), sphere, Vector4(1.0,0.0,0.0,1.0), 100.0);
 
 	//pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
 }
 
 void
 Scene5::update(double t) {
-	//pS->update(t);
+	sS->update(t);
 }
 
 void

@@ -9,6 +9,7 @@ class ForceGenerator;
 class Pin;
 class SpecialParticleSystem;
 class FloatationFG;
+class SolidSystem;
 namespace physx{
 	class PxPhysics;
 	class PxScene;
@@ -138,7 +139,7 @@ class Scene5 : public Scene {
 
 private:
 	std::vector<RenderItem*> RI;
-	ParticleSystem* pS;
+	SolidSystem* sS;
 	physx::PxPhysics* gPhysics = NULL;
 	physx::PxScene* gScene = NULL;
 public:

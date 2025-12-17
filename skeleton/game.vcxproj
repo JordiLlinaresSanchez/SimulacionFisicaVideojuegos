@@ -26,6 +26,7 @@
     <ClCompile Include="floatationFG.cpp" />
     <ClCompile Include="forceGenerator.cpp" />
     <ClCompile Include="gaussianParticleGenerator.cpp" />
+    <ClCompile Include="gaussianSG.cpp" />
     <ClCompile Include="gravityForceGenerator.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="hurricaneGenerator.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="floatationFG.h" />
     <ClInclude Include="forceGenerator.h" />
     <ClInclude Include="gaussianParticleGenerator.h" />
+    <ClInclude Include="gaussianSG.h" />
     <ClInclude Include="gravityForceGenerator.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="hurricaneGenerator.h" />
