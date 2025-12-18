@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="anchoredSpringFG.cpp" />
     <ClCompile Include="ballLauncher.cpp" />
+    <ClCompile Include="bowlingBallSystem.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="explosionGenerator.cpp" />
     <ClCompile Include="floatationFG.cpp" />
@@ -53,6 +54,7 @@
   <ItemGroup>
     <ClInclude Include="anchoredSpringFG.h" />
     <ClInclude Include="ballLauncher.h" />
+    <ClInclude Include="bowlingBallSystem.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />

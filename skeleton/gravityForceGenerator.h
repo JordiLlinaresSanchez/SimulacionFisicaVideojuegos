@@ -5,7 +5,9 @@ class GravityForceGenerator : public ForceGenerator
 public:
 	GravityForceGenerator(Vector3 force);
 	void update(double t) override;
-	bool checkCondition(Particle* particle) override;
+	bool checkCondition(Particle* particle) override; 
+	bool checkCondition(physx::PxRigidDynamic* solid) override;
 	Vector3 applyForce(Particle* particle) override;
+	Vector3 applyForce(physx::PxRigidDynamic* solid)override;
 };
 

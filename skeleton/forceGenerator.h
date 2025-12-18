@@ -16,6 +16,8 @@ public:
 	void setTimer(double time) { _elapsedTime = time; }
 	virtual void update(double t) = 0;
 	virtual bool checkCondition(Particle* particle) = 0;
+	virtual bool checkCondition(physx::PxRigidDynamic* solid) = 0;
 	virtual Vector3 applyForce(Particle* particle) = 0;
+	virtual Vector3 applyForce(physx::PxRigidDynamic* solid) = 0;
 };
 

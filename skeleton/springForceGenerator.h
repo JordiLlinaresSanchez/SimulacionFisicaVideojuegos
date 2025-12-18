@@ -8,6 +8,7 @@ protected:
 	double _k;
 	double _restingLength;
 	std::unordered_map<Particle*, std::vector<Particle*>> _atached;
+	std::unordered_map<physx::PxRigidDynamic*, std::vector<Particle*>> _atachedSolid;
 public:
 	SpringForceGenerator(double k, double restingLength);
 	~SpringForceGenerator();
@@ -15,6 +16,8 @@ public:
 	void update(double t) override;
 	bool checkCondition(Particle* particle) override;
 	Vector3 applyForce(Particle* particle) override;
+	bool checkCondition(physx::PxRigidDynamic* a) override;
+	Vector3 applyForce(physx::PxRigidDynamic* a) override;
 	virtual void asignParticles(Particle* part, Particle* root);
 };
 

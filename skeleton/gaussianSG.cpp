@@ -23,11 +23,15 @@ GaussianSG::generate(physx::PxScene* scene) {
 		double mass = abs(_mass + _u(_mt) * _massVar);
 		Vector4 color = Vector4(_color.x + _u(_mt) * _colorVar.x, _color.y + _u(_mt) * _colorVar.y, _color.z + _u(_mt) * _colorVar.z, _color.w + _u(_mt) * _colorVar.w);
 		
-		physx::PxRigidActor* solid = scene->getPhysics().createRigidStatic(physx::PxTransform(source));
+		physx::PxRigidDynamic* solid = scene->getPhysics().createRigidDynamic(physx::PxTransform(source));
 		solidDT.solid = solid;
+		solid->setMass(mass);
+		solid->setLinearVelocity(vel);
 
 		solid->attachShape(*_shape);
 		scene->addActor(*solid);
+
+		solid;
 
 		solidDT.ri = new RenderItem(_shape, solid, color);
 

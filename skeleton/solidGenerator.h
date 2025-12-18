@@ -4,7 +4,7 @@
 #include "RenderUtils.hpp"
 
 struct SolidDT {
-	physx::PxRigidActor* solid;
+	physx::PxRigidDynamic* solid;
 	RenderItem* ri;
 	Vector3 origin;
 	double lifeDistance;

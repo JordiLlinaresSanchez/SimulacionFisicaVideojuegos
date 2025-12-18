@@ -19,3 +19,13 @@ Vector3
 ExplosionGenerator::applyForce(Particle* particle) {
 	return (_intensity / (_radius * _radius)) * (particle->getPos() - _initPos) * exp(-_elapsedTime / _tau);
 }
+
+bool
+ExplosionGenerator::checkCondition(physx::PxRigidDynamic* solid) {
+	return (solid->getGlobalPose().p - _initPos).magnitude() <= _radius;
+}
+
+Vector3
+ExplosionGenerator::applyForce(physx::PxRigidDynamic* solid) {
+	return (_intensity / (_radius * _radius)) * (solid->getGlobalPose().p - _initPos) * exp(-_elapsedTime / _tau);
+}

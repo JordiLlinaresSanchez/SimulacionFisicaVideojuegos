@@ -10,6 +10,9 @@ class Pin;
 class SpecialParticleSystem;
 class FloatationFG;
 class SolidSystem;
+class RigidPin;
+class BowlingBallSystem;
+class SolidGenerator;
 namespace physx{
 	class PxPhysics;
 	class PxScene;
@@ -145,6 +148,35 @@ private:
 public:
 	Scene5(physx::PxPhysics* physics, physx::PxScene* scene);
 	~Scene5();
+
+	void initPhysics(bool interactive) override;
+
+	void update(double t)override;
+
+	void keyPress(unsigned char key, const physx::PxTransform& camera)override;
+
+};
+
+class GameScene2 : public Scene {
+
+private:
+	std::vector<RenderItem*> RI;
+	//std::vector<RigidPin*> pins;
+	std::vector<ParticleGenerator*> confetti;
+	ParticleSystem* pS;
+	SolidSystem* sS;
+	BowlingBallSystem* ballSystem;
+	SolidGenerator* balls;
+	ForceGenerator* explosion;
+	physx::PxScene* gScene;
+
+
+	void generatePins();
+	void generateConfetti();
+
+public:
+	GameScene2(physx::PxScene* scene);
+	~GameScene2();
 
 	void initPhysics(bool interactive) override;
 

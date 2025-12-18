@@ -99,7 +99,12 @@
     <ClCompile Include="solidSystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="gaussianSG.cpp" />
+    <ClCompile Include="gaussianSG.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="bowlingBallSystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -192,6 +197,11 @@
     <ClInclude Include="solidSystem.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="gaussianSG.h" />
+    <ClInclude Include="gaussianSG.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="bowlingBallSystem.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

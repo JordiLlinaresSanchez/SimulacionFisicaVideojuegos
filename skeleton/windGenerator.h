@@ -13,6 +13,9 @@ public:
 	WindGenerator(Vector3 windVel, Vector3 center, double radius);
 	void update(double t) override;
 	bool checkCondition(Particle* particle) override;
+	bool checkCondition(physx::PxRigidDynamic* solid) override;
 	virtual Vector3 applyForce(Particle* particle) override;
+	Vector3 applyForce(physx::PxRigidDynamic* solid)override;
+
 };
 
