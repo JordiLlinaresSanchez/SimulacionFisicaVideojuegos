@@ -90,22 +90,7 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 		mDir = qx.rotate(mDir);*/
 		break;
 	}
-	case 'Q': {
-		auto pos = mTargetPoint - mEye;
-		mEye -= (viewY * cos(PxPi * 0.01) + mDir * sin(PxPi * 0.01)) * 0.07f * speed * pos.magnitude();
-		mEye += mDir * 0.00469 * speed * pos.magnitude();
-		pos = mTargetPoint - mEye;
-		mDir = pos.getNormalized();
-		break;
-	}
-	case 'E': {
-		auto pos = mTargetPoint - mEye;
-		mEye += (viewY * cos(PxPi * 0.01) + mDir * sin(PxPi * 0.01)) * 0.07f * speed * pos.magnitude();
-		mEye += mDir * 0.00015 * speed * pos.magnitude();
-		pos = mTargetPoint - mEye;
-		mDir = pos.getNormalized();
-		break;
-	}
+	
 	default:							return false;
 	}
 	return true;

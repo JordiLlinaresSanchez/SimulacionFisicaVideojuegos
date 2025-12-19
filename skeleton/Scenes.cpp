@@ -508,29 +508,29 @@ GameScene2::generatePins() {
 		double distance = 0.4, pos = 0;
 		for (int j = 0; j < i + 1; ++j) {
 			pos = distance * j;
-			Vector3 initPos = Vector3(30.0 + distance * i, 0.4, 0.0 - (distance * i / 2) + distance * j);
-			sS->addSolid(initPos, CreateShape(PxCapsuleGeometry(0.08, 0.12)), Vector4(0.97, 0.05,0.1, 1.0), 10.0, 30.0);
+			Vector3 initPos = Vector3(0.0 - (distance * i / 2) + distance * j, 0.7, 15.0 + distance * i);
+			sS->addSolid(initPos, CreateShape(PxBoxGeometry(0.12, 0.6, 0.12)), Vector4(0.97, 0.05,0.05, 1.0), 10.0, 30.0, Vector3(0.0), 7.0);
 		}
 	}
 }
 
 void
 GameScene2::generateConfetti() {
-	PxShape* confettiShape = CreateShape(PxSphereGeometry(0.05));
+	PxShape* confettiShape = CreateShape(PxSphereGeometry(0.15));
 
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(1.0, 0.3, 0.3, 1.0), 1, 0.01, Vector3(1.0, 1.0, 1.0), Vector3(3.0, 2.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(0.3, 1.0, 0.3, 1.0), 1, 0.011, Vector3(1.1, 1.1, 1.1), Vector3(2.0, 6.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, 6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(0.3, 0.3, 1.0, 1.0), 1, 0.012, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.0, 2.5), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(6.0, 5.0, 5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(1.0, 0.3, 0.3, 1.0), 4, 0.01, Vector3(1.0, 1.0, 1.0), Vector3(3.0, 2.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(6.0, 5.0,5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 1.0, 0.3, 1.0), 4, 0.011, Vector3(1.1, 1.1, 1.1), Vector3(2.0, 6.0, 2.0), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(6.0, 5.0,5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 0.3, 1.0, 1.0), 4, 0.012, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.0, 2.5), 2.0, 5.0, 0.006, Vector4(0.1, 0.1, 0.1, 0.0)));
 
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(1.0, 0.3, 0.3, 1.0), 1, 0.014, Vector3(1.0, 1.0, 1.0), Vector3(2.0, 2.0, 2.5), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(0.3, 1.0, 0.3, 1.0), 1, 0.013, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.5, 3.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
-	confetti.push_back(new GaussianParticleGenerator(Vector3(10.0, 5.0, -6.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
-		Vector4(0.3, 0.3, 1.0, 1.0), 1, 0.015, Vector3(1.1, 1.1, 1.1), Vector3(2.5, 3.0, 2.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(-6.0, 5.0, 5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(1.0, 0.3, 0.3, 1.0), 4, 0.014, Vector3(1.0, 1.0, 1.0), Vector3(2.0, 2.0, 2.5), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(-6.0, 5.0, 5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 1.0, 0.3, 1.0), 4, 0.013, Vector3(1.2, 1.2, 1.2), Vector3(3.0, 2.5, 3.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
+	confetti.push_back(new GaussianParticleGenerator(Vector3(-6.0, 5.0, 5.0), Vector3(0.0), Vector3(0.0), confettiShape, 5.0, 10.0, 0.001, 0.999,
+		Vector4(0.3, 0.3, 1.0, 1.0), 4, 0.015, Vector3(1.1, 1.1, 1.1), Vector3(2.5, 3.0, 2.0), 2.0, 5.0, 0.0006, Vector4(0.1, 0.1, 0.1, 0.0)));
 
 	for (auto c : confetti) {
 		pS->addParticleGenerator(c);
@@ -539,8 +539,42 @@ GameScene2::generateConfetti() {
 }
 
 void
+GameScene2::generateSlinky(Vector3 pos) {
+	PxShape* sphere = CreateShape(PxSphereGeometry(0.2));
+	PxShape* box = CreateShape(PxBoxGeometry(Vector3(0.05)));
+
+	Particle* red = new Particle(pos, Vector3(0.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(1.0, 0.0, 0.0, 1.0));
+	Particle* orange = new Particle(pos- Vector3(0.0, 1.0, 0.0), Vector3(1.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(1.0, 0.5, 0.0, 1.0));
+	Particle* yellow = new Particle(pos - Vector3(0.0, 2.0, 0.0), Vector3(2.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(1.0, 1.0, 0.0, 1.0));
+	Particle* green = new Particle(pos - Vector3(0.0, 3.0, 0.0), Vector3(3.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(0.0, 1.0, 0.0, 1.0));
+	Particle* blue = new Particle(pos - Vector3(0.0, 4.0, 0.0), Vector3(4.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(0.0, 0.0, 1.0, 1.0));
+	Particle* purple = new Particle(pos - Vector3(0.0, 5.0, 0.0), Vector3(5.0, 0.0, 0.0), Vector3(0.0), 0.5, 0.9, sphere, Vector4(0.5, 0.0, 1.0, 1.0));
+
+
+	pS->addParticle(red, pos, 100.0);
+	pS->addParticle(orange, pos - Vector3(0.0, 3.0, 0.0), 100.0);
+	pS->addParticle(yellow, pos - Vector3(0.0, 6.0, 0.0), 100.0);
+	pS->addParticle(green, pos - Vector3(0.0, 9.0, 0.0), 100.0);
+	pS->addParticle(blue, pos - Vector3(0.0, 12.0, 0.0), 100.0);
+	pS->addParticle(purple, pos - Vector3(0.0, 15.0, 0.0), 100.0);
+
+	AnchoredSpringFG* anchoredSpring = new AnchoredSpringFG(10.0, 0.1, pos, box);
+	TwoWaysSpringFG* spring = new TwoWaysSpringFG(10.0, 0.1);
+
+	anchoredSpring->atachToRoot(red);
+	spring->asignParticles(orange, red);
+	spring->asignParticles(orange, yellow);
+	spring->asignParticles(yellow, green);
+	spring->asignParticles(green, blue);
+	spring->asignParticles(blue, purple);
+
+	pS->addForceGenerator(anchoredSpring);
+	pS->addForceGenerator(spring);
+}
+
+void
 GameScene2::initPhysics(bool interactive) {
-	PxShape* ballShape = CreateShape(PxSphereGeometry(0.15));
+	PxShape* ballShape = CreateShape(PxSphereGeometry(0.15), gScene->getPhysics().createMaterial(0.6, 0.7, 0.1));
 	PxShape* floor = CreateShape(PxBoxGeometry(1.2, 0.1, 20.0));
 
 	PxRigidStatic* floorRB = gScene->getPhysics().createRigidStatic(PxTransform(Vector3(0.0, 0.0, 0.0)));
@@ -553,18 +587,36 @@ GameScene2::initPhysics(bool interactive) {
 	sS = new SolidSystem(gScene, &gScene->getPhysics(), 100);
 	ballSystem = new BowlingBallSystem(gScene, &gScene->getPhysics(), 100);
 	
-	balls = new GaussianSG(Vector3(0.0), Vector3(10.0, 0.5, 0.0), ballShape, 10.0, 50.0, 10.5, 1.0, Vector4(0.3, 0.5, 1.0, 1.0), 1, Vector3(0.0), Vector3(0.2), 0.0, 0.0, 3.0, Vector4(0.1, 0.1, 0.0, 0.0));
+	balls = new GaussianSG(Vector3(0.0), Vector3(30.0, 0.5, 0.0), ballShape, 10.0, 50.0, 10.5, 1.0, Vector4(0.3, 0.5, 1.0, 1.0), 1, Vector3(0.0), Vector3(0.2), 0.0, 0.0, 3.0, Vector4(0.1, 0.1, 0.0, 0.0));
 	ballSystem->addSolidGenerator(balls);
 	
 	generateConfetti();
-	
+	generateSlinky(Vector3(7.0, 15.0, 5.0));
+	generateSlinky(Vector3(-7.0, 15.0, 5.0));
+	generateSlinky(Vector3(7.0, 15.0, 7.5));
+	generateSlinky(Vector3(-7.0, 15.0, 7.5));
+	generateSlinky(Vector3(7.0, 15.0, 10.0));
+	generateSlinky(Vector3(-7.0, 15.0, 10.0));
+	generateSlinky(Vector3(7.0, 15.0, 12.5));
+	generateSlinky(Vector3(-7.0, 15.0, 12.5));
+	generateSlinky(Vector3(7.0, 15.0, 15.0));
+	generateSlinky(Vector3(-7.0, 15.0, 15.0));
+
+
 	
 	pS->addForceGenerator(new GravityForceGenerator(Vector3(0.0, -9.4, 0.0)));
 	
 	
-	explosion = new ExplosionGenerator(Vector3(28.0, 0.0, 0.0), 10.0, 50000.0, 0.5);
+	explosion = new ExplosionGenerator(Vector3(6.0, 30.0, 5.0), 20.0, 400.0, 0.5);
 	pS->addForceGenerator(explosion);
-	ballSystem->addForceGenerator(explosion);
+	explosion2 = new ExplosionGenerator(Vector3(-6.0, 30.0, 5.0), 20.0, 400.0, 0.5);
+	pS->addForceGenerator(explosion2);
+
+	wind = new WindGenerator(Vector3(1.0, 0.0, 0.0), Vector3(0.0), 40.0);
+	wind->setCanAply(false);
+	pS->addForceGenerator(wind);
+
+	//pS->addForceGenerator(new );
 	floor->release();
 }
 
@@ -586,6 +638,11 @@ GameScene2::keyPress(unsigned char key, const PxTransform& camera) {
 	//algo explota
 	case'L': {
 		explosion->setTimer(0.0);
+		explosion2->setTimer(0.0);
+		break;
+	}
+	case 'O': {
+		wind->setCanAply(!wind->getCanAply());
 		break;
 	}
 	//lanza bola de bolos

@@ -12,14 +12,14 @@ bool
 WindGenerator::checkCondition(Particle* particle) {
 	if (!_isSphere)
 		return particle->getPos().x <= _initPos.x && particle->getPos().y <= _initPos.y && particle->getPos().z <= _initPos.z &&
-		particle->getPos().x >= _endPos.x && particle->getPos().y >= _endPos.y && particle->getPos().z >= _endPos.z;
+		particle->getPos().x >= _endPos.x && particle->getPos().y >= _endPos.y && particle->getPos().z >= _endPos.z && canAply;
 	else
-		return (particle->getPos() - _initPos).magnitude() <= _radius;
+		return (particle->getPos() - _initPos).magnitude() <= _radius && canAply;
 }
 
 Vector3 
 WindGenerator::applyForce(Particle* particle) {
-	return 0.5 * (_magnitude - particle->getVel());
+	return 0.5 * (_magnitude - particle->getVel()) ;
 }
 
 bool

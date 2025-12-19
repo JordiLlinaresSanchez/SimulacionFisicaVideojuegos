@@ -1,5 +1,5 @@
 #include "Scene.h"
-
+#include"core.hpp"
 
 class RenderItem;
 class Gun;
@@ -13,6 +13,7 @@ class SolidSystem;
 class RigidPin;
 class BowlingBallSystem;
 class SolidGenerator;
+
 namespace physx{
 	class PxPhysics;
 	class PxScene;
@@ -168,11 +169,14 @@ private:
 	BowlingBallSystem* ballSystem;
 	SolidGenerator* balls;
 	ForceGenerator* explosion;
+	ForceGenerator* explosion2;
+	ForceGenerator* wind;
 	physx::PxScene* gScene;
 
 
 	void generatePins();
 	void generateConfetti();
+	void generateSlinky(Vector3 pos);
 
 public:
 	GameScene2(physx::PxScene* scene);

@@ -15,6 +15,7 @@ SolidSystem::~SolidSystem() {
 	
 	for (SolidDT& s : _solids) {
 		_gScene->removeActor(*s.solid);
+		DeregisterRenderItem(s.ri);
 		s.ri->release();
 	}
 	for (ForceGenerator* fg : _forceGenerators) delete fg;
@@ -31,20 +32,20 @@ SolidSystem::addForceGenerator(ForceGenerator* fg) {
 }
 
 void
-SolidSystem::addSolid(Vector3& origin, physx::PxShape* shape, Vector4 color, double lifeDistance, double lifeTime, Vector3 vel) {
+SolidSystem::addSolid(Vector3& origin, physx::PxShape* shape, Vector4 color, double lifeDistance, double lifeTime, Vector3 vel, double mass) {
 	SolidDT newSolid;
 	newSolid.lifeDistance = lifeDistance;
 	newSolid.lifeTime = lifeTime;
 	newSolid.origin = origin;
 	
-	physx::PxRigidDynamic* solid = _gPhysics->createRigidDynamic(physx::PxTransform(origin));
-	solid->attachShape(*shape);
-	_gScene->addActor(*solid);
+	newSolid.solid = _gPhysics->createRigidDynamic(physx::PxTransform(origin));
+	newSolid.solid->attachShape(*shape);
+	_gScene->addActor(*newSolid.solid);
 	physx::PxRigidBodyExt::updateMassAndInertia(*newSolid.solid, 0.15);
 
-	newSolid.solid = solid;
-	newSolid.ri = new RenderItem(shape, solid, color);
-	
+	newSolid.ri = new RenderItem(shape, newSolid.solid, color);
+	newSolid.solid->setMass(mass);
+
 	_solids.push_back(newSolid);
 }
 
@@ -87,19 +88,17 @@ SolidSystem::generateSolid() {
 
 void
 SolidSystem::deleteSolid(double t) {
-	for (int i = _solids.size() - 1; i >= 0; --i) {
-		_solids[i].lifeTime -= t;
-		if (_solids[i].lifeDistance < (_solids[i].solid->getGlobalPose().p - _solids[i].origin).magnitude() ||  _solids[i].lifeTime < 0) {
-			std::cout << _solids[i].solid->getGlobalPose().p.x << ' ' << _solids[i].solid->getGlobalPose().p.y << ' ' << _solids[i].solid->getGlobalPose().p.z << '\n';
-			SolidDT& temp = _solids[i];
-			_solids[i] = _solids[_solids.size() - 1];
-			_solids[_solids.size() - 1] = temp;
+	int size = _solids.size();
 
-			_gScene->removeActor(*temp.solid);
-			_solids[_solids.size() - 1].ri->release();
-
-			//_solids[_solids.size() - 1].solid = NULL;
-			_solids.pop_back();
+	for (int i = 0; i < size; ++i) {
+		auto aux = _solids.front();
+		_solids.pop_front();
+		if (aux.lifeDistance < (aux.solid->getGlobalPose().p - aux.origin).magnitude() || aux.lifeTime < 0) {
+			aux.solid->release();
+			DeregisterRenderItem(aux.ri);
+		}
+		else {
+			_solids.push_back(aux);
 		}
 	}
 }

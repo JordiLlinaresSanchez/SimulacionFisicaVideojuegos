@@ -31,7 +31,6 @@ GaussianSG::generate(physx::PxScene* scene) {
 		solid->attachShape(*_shape);
 		scene->addActor(*solid);
 
-		solid;
 
 		solidDT.ri = new RenderItem(_shape, solid, color);
 
